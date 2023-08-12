@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +22,8 @@ public class Category {
 	private String description;
 	private Date createddate;
 	private String createdBy;
-	private String image;
+	@Lob
+	private byte[] image;
 
 	public int getId() {
 		return id;
@@ -63,12 +65,11 @@ public class Category {
 		this.createdBy = createdBy;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
 }
