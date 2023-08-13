@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+<<<<<<< HEAD
+=======
+import javax.persistence.ManyToOne;
+>>>>>>> f2b2c802a1868aba27a93564715c3c1e7d1943c1
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +26,9 @@ public class SubCategory {
 	private String description;
 	private Date createddate;
 	private String createdBy;
+	
+	
+	
 
 	public int getSubcategoryid() {
 		return subcategoryid;

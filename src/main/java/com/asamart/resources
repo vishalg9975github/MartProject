@@ -17,4 +17,8 @@ logging.file.name=C:/Users/dell/Desktop/sample/asalog.log
 
 #to handle the FileSizeLimitExceededException
 spring.servlet.multipart.max-file-size=10MB
+<<<<<<< HEAD:src/main/resources/application.properties
 spring.servlet.multipart.max-request-size=10MB
+=======
+spring.servlet.multipart.max-request-size=10MB
+>>>>>>> f2b2c802a1868aba27a93564715c3c1e7d1943c1:src/main/java/com/asamart/resources
