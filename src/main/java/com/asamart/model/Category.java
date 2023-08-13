@@ -2,6 +2,7 @@ package com.asamart.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,9 @@ public class Category {
 	private String description;
 	private Date createddate;
 	private String createdBy;
+
 	@Lob
+	@Column(name = "image", columnDefinition = "LONGBLOB")
 	private byte[] image;
 
 	public int getId() {
@@ -72,4 +75,5 @@ public class Category {
 	public byte[] getImage() {
 		return image;
 	}
+
 }
