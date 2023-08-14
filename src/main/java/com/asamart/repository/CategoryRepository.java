@@ -1,9 +1,12 @@
 package com.asamart.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.asamart.model.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, Integer>{
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 
 }

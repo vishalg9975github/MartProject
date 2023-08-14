@@ -30,16 +30,13 @@ public class Category {
 	private Date createddate;
 
 	private String createdBy;
+
 	@Lob
 	private byte[] image;
 
 	@OneToMany(mappedBy = "categoryid")
 
 	private List<SubCategory> subCategory;
-
-
-
-
 
 	public int getId() {
 		return id;
@@ -89,7 +86,6 @@ public class Category {
 		return image;
 	}
 
-
 	public List<SubCategory> getSubCategory() {
 		return subCategory;
 	}
@@ -97,8 +93,6 @@ public class Category {
 	public void setSubCategory(List<SubCategory> subCategory) {
 		this.subCategory = subCategory;
 	}
-
-
 
 	@PrePersist
 	protected void onCreate() {
