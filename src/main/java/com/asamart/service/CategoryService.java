@@ -8,4 +8,6 @@ public interface CategoryService {
 
 	Category getCategoryById(Integer id);
 
+	Category updateCategory(Category category);
+
 }

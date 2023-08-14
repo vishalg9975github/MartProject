@@ -28,4 +28,10 @@ public class CategoryServiceImplementation implements CategoryService {
 		return categoryRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public Category updateCategory(Category category) {
+		return categoryRepository.save(category);
+
+	}
+
 }

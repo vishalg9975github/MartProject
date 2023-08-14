@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,4 +67,24 @@ public class CategoryController {
 		return ResponseEntity.ok(category);
 	}
 
+	@PutMapping("/updateCategory/{id}")
+	public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category updatedCategory) {
+		Category existingCategory = categoryService.getCategoryById(id);
+
+		if (existingCategory == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		// Update the fields of the existingCategory object with the values from
+		// updatedCategory
+		existingCategory.setCategoryname(updatedCategory.getCategoryname());
+		existingCategory.setDescription(updatedCategory.getDescription());
+		existingCategory.setCreateddate(updatedCategory.getCreateddate());
+		existingCategory.setCreatedBy(updatedCategory.getCreatedBy());
+		existingCategory.setImage(updatedCategory.getImage());
+
+		Category savedCategory = categoryService.updateCategory(existingCategory);
+
+		return ResponseEntity.ok(savedCategory);
+	}
 }
