@@ -22,4 +22,26 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		return subCategoryRepository.save(subCategory);
 	}
 
+	@Override
+	public SubCategory updateSubCategory(Integer subcategoryid, SubCategory updatesubCategory) {
+		logger.info("In subcategory controller update SubCategory method");
+		
+		SubCategory sub1= subCategoryRepository.findById(subcategoryid).orElse(null);
+		if(sub1!=null)
+		{
+			
+			sub1.setSubcategoryname(updatesubCategory.getSubcategoryname());
+			sub1.setCreatedBy(updatesubCategory.getCreatedBy());
+			sub1.setDescription(updatesubCategory.getDescription());
+			sub1.setCategoryid(updatesubCategory.getCategoryid());
+
+			return subCategoryRepository.save(sub1);
+		}
+		else 
+		{
+			throw new RuntimeException("SubCategeory not found");
+		}
+		
+	}
+
 }
