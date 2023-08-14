@@ -11,19 +11,19 @@ import com.asamart.service.CategoryService;
 public class CatergoryServiceImpl implements CategoryService {
 
 	private final CategoryRepository categoryRepository;
-	
+
 	@Autowired
 	public CatergoryServiceImpl(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;
 	}
 
-	
-	
+
+
 	@Override
 	public Category addCategory(Category category) {
 		// TODO Auto-generated method stub
 		return categoryRepository.save(category);
 	}
 
-	
+
 }
