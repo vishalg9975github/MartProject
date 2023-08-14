@@ -3,11 +3,14 @@ package com.asamart.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,23 +71,37 @@ public class CategoryController {
 	}
 
 	@PutMapping("/updateCategory/{id}")
-	public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category updatedCategory) {
+	public ResponseEntity<Map<String, Object>> updateCategory(@PathVariable Integer id,
+			@RequestParam("file") MultipartFile file, @RequestParam("categoryname") String categoryname,
+			@RequestParam("description") String description, @RequestParam("createdBy") String createdBy) {
 		Category existingCategory = categoryService.getCategoryById(id);
 
 		if (existingCategory == null) {
 			return ResponseEntity.notFound().build();
 		}
 
-		// Update the fields of the existingCategory object with the values from
-		// updatedCategory
-		existingCategory.setCategoryname(updatedCategory.getCategoryname());
-		existingCategory.setDescription(updatedCategory.getDescription());
-		existingCategory.setCreateddate(updatedCategory.getCreateddate());
-		existingCategory.setCreatedBy(updatedCategory.getCreatedBy());
-		existingCategory.setImage(updatedCategory.getImage());
+		try {
+			byte[] imageBytes = file.getBytes();
 
-		Category savedCategory = categoryService.updateCategory(existingCategory);
+			existingCategory.setCategoryname(categoryname);
+			existingCategory.setDescription(description);
 
-		return ResponseEntity.ok(savedCategory);
+			existingCategory.setCreatedBy(createdBy);
+			existingCategory.setImage(imageBytes);
+
+			Category savedCategory = categoryService.updateCategory(existingCategory);
+			// Create a custom response with updated category details and a message
+			Map<String, Object> response = new HashMap<>();
+			response.put("category", savedCategory);
+			response.put("message", "Category updated successfully.");
+
+			return ResponseEntity.ok(response);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
 	}
+
 }

@@ -94,9 +94,9 @@ public class Category {
 		this.subCategory = subCategory;
 	}
 
-	@PrePersist
+	/*@PrePersist
 	protected void onCreate() {
 		createddate = new Date();
-	}
+	}*/
 
 }
