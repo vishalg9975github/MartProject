@@ -46,4 +46,11 @@ public class ProductServiceImplementation implements ProductService {
 		return product2;
 	}
 
+	@Override
+	public void deleteProduct(Integer id) {
+		logger.info("in ProductService class delete method");
+		productRepository.deleteById(id);
+		
+	}
+
 }
