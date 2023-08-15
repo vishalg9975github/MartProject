@@ -4,6 +4,7 @@ import com.asamart.model.Product;
 
 public interface ProductService {
 	
-	public Product updateProduct(Product product);
+	// Update the product by Id 
+	public Product updateProductById(int id,Product product);
 
 }
