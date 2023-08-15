@@ -2,13 +2,13 @@ package com.asamart.model;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +34,6 @@ public class Category {
 	private byte[] image;
 
 	@OneToMany(mappedBy = "categoryid")
-
 	private List<SubCategory> subCategory;
 
 	public int getId() {
@@ -93,9 +92,9 @@ public class Category {
 		this.subCategory = subCategory;
 	}
 
-	/*@PrePersist
+	@PrePersist
 	protected void onCreate() {
 		createddate = new Date();
-	}*/
+	}
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -101,6 +102,16 @@ public class CategoryController {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+	}
+	
+	
+	/* Author:Sumit Gaikwad */
+	@GetMapping("/allCategory")
+	public List<Category> getAllDetails() {
+		List<Category> allCategoryDetails = categoryService.getAllDetails();
+		//Return all category Details
+		return allCategoryDetails;
 
 	}
 
