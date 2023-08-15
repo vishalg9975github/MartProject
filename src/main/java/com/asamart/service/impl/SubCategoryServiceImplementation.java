@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asamart.controller.SubCategoryController;
-import com.asamart.controller.TestController;
 import com.asamart.exceptions.SubCategoryNotFoundException;
 import com.asamart.model.SubCategory;
 import com.asamart.repository.SubCategoryRepository;
@@ -19,7 +18,6 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
 	
-	
 	@Override
 	public SubCategory getSubCategoryById(Integer Id) {
 		
@@ -27,5 +25,34 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 			throw new SubCategoryNotFoundException("Requested SubCategoryId does not exist");
 		SubCategory subCategory = subCategoryRepository.findById(Id).get();
 		return subCategory;
+	}
+	
+	@Override
+	public SubCategory saveSubCategory(SubCategory subCategory) {
+
+		logger.info("In subcategory controller save SubCategory method");
+		return subCategoryRepository.save(subCategory);
+	}
+
+	@Override
+	public SubCategory updateSubCategory(Integer subcategoryid, SubCategory updatesubCategory) {
+		logger.info("In subcategory controller update SubCategory method");
+		
+		SubCategory sub1= subCategoryRepository.findById(subcategoryid).orElse(null);
+		if(sub1!=null)
+		{
+			
+			sub1.setSubcategoryname(updatesubCategory.getSubcategoryname());
+			sub1.setCreatedBy(updatesubCategory.getCreatedBy());
+			sub1.setDescription(updatesubCategory.getDescription());
+			sub1.setCategoryid(updatesubCategory.getCategoryid());
+
+			return subCategoryRepository.save(sub1);
+		}
+		else 
+		{
+			throw new RuntimeException("SubCategeory not found");
+		}
+		
 	}
 }
