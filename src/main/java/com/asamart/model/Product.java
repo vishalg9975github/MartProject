@@ -79,4 +79,11 @@ public class Product {
 		this.featured = featured;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
+				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
+				+ ", featured=" + featured + "]";
+	}
+
 }

@@ -1,17 +1,18 @@
 package com.asamart.model;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "subcategory")
 public class SubCategory {
-//subcategoryid, subcategoryname, categoryid, description, createddate, createdby
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,10 @@ public class SubCategory {
 	private String subcategoryname;
 	private int categoryid;
 	private String description;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createddate;
 	private String createdBy;
-	
-	
-	
 
 	public int getSubcategoryid() {
 		return subcategoryid;
@@ -71,6 +71,11 @@ public class SubCategory {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		createddate = new Date();
 	}
 
 }
