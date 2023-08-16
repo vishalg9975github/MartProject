@@ -11,5 +11,8 @@ public interface ProductService {
 	
 	public void deleteProduct(Integer id);
 	
+	//Get Product by Id
+	public Product getProductById(Integer Id);
+	
 
 }

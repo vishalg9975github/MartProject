@@ -1,11 +1,11 @@
 package com.asamart.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	//@Author- Anushka
+	// @Author- Anushka
 
 	@PutMapping("/updateProductById/{id}")
 	public ResponseEntity<Product> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
@@ -31,8 +31,8 @@ public class ProductController {
 		return ResponseEntity.ok().body(product2);
 
 	}
-	
-	//@Author- Sachin More
+
+	// @Author- Sachin More
 
 	@DeleteMapping("/deleteProduct/{id}")
 	public void deleteProductById(@PathVariable("id") Integer id) {
@@ -40,5 +40,13 @@ public class ProductController {
 		logger.info("in productcontroller class deletemapping");
 	}
 
+	// @Auther - Younus Shaikh
 
+	@GetMapping("/getProduct/{id}")
+	public ResponseEntity<Product> getProductById(@PathVariable("id") Integer id) {
+		Product pro = productService.getProductById(id);
+		logger.info("In Rest Contoller , get Product data");
+		return ResponseEntity.ok().body(pro);
+
+	}
 }

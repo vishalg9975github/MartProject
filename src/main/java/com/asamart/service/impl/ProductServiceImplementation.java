@@ -53,4 +53,12 @@ public class ProductServiceImplementation implements ProductService {
 		
 	}
 
+	//Get Product details by using Id
+	@Override
+	public Product getProductById(Integer Id) {
+		logger.info("In ProductServiceImpl , getProduct Data");
+		Product product = productRepository.findById(Id).get();
+		return product;
+	}
+
 }
