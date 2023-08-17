@@ -15,16 +15,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-	/*
-	 * @Author Sachin more- if we pass the empty input
-	 * 
-	 * @ExceptionHandler(EmptyInputException.class) public ResponseEntity<String>
-	 * handleEmptyInput(EmptyInputException emptyInputException){ return new
-	 * ResponseEntity<String>("input field is empty", HttpStatus.BAD_REQUEST); }
-	 * 
-	 */
+	// @Author Sachin more- if we pass the empty input
 
-	// @Author Sachin more  this is for get
+	@ExceptionHandler(EmptyInputException.class)
+	public ResponseEntity<String> handleEmptyInput(EmptyInputException emptyInputException) {
+		return new ResponseEntity<String>("input field is empty", HttpStatus.BAD_REQUEST);
+	}
+
+	// @Author Sachin more this is for get
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException elementException) {
 		return new ResponseEntity<String>("No value present in database", HttpStatus.NOT_FOUND);
@@ -37,12 +35,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>("please change http method type request", HttpStatus.NOT_FOUND);
 
 	}
-	// @Author Sachin more- delete method 
+
+	// @Author Sachin more- delete method
 	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ResponseEntity<String> handleEmptyResultDataAccessException(EmptyResultDataAccessException emptyResultDataAccessException) {
+	public ResponseEntity<String> handleEmptyResultDataAccessException(
+			EmptyResultDataAccessException emptyResultDataAccessException) {
 		return new ResponseEntity<String>("data not found in database", HttpStatus.NOT_FOUND);
 	}
-	
-	
-	
+
 }
