@@ -32,6 +32,15 @@ public class ProductServiceImplementation implements ProductService {
 		return productList;
 	}
 	
+
+	// @ Author -Nandini
+	@Override
+	public Product saveProduct(Product pd) {
+		logger.info("In the Controller class,saveProduct method");
+		return productRepository.save(pd);
+	}
+
+
 	// @ Author -Anushka
 	// Update the product details by using id
 	@Override
@@ -64,6 +73,13 @@ public class ProductServiceImplementation implements ProductService {
 		
 	}
 
-	
+	//Get Product details by using Id
+	@Override
+	public Product getProductById(Integer Id) {
+		logger.info("In ProductServiceImpl , getProduct Data");
+		Product product = productRepository.findById(Id).get();
+		return product;
+	}
+
 
 }

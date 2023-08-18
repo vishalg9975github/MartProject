@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import com.asamart.model.Category;
 import com.asamart.service.CategoryService;
 
 @RestController
+@RequestMapping("/Category")
 public class CategoryController {
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 	@Autowired
@@ -101,6 +103,15 @@ public class CategoryController {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+	}
+
+	/* Author:Sumit Gaikwad */
+	@GetMapping("/allCategory")
+	public List<Category> getAllDetails() {
+		List<Category> allCategoryDetails = categoryService.getAllDetails();
+		// Return all category Details
+		return allCategoryDetails;
 
 	}
 
