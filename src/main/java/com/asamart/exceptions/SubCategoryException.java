@@ -2,6 +2,8 @@ package com.asamart.exceptions;
 
 import org.springframework.http.HttpStatus;
 
+/* Author name: Ankita Ghayal */
+
 public class SubCategoryException { 
 	
 	  

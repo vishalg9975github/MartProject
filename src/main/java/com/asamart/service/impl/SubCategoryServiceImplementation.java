@@ -1,4 +1,8 @@
+
 package com.asamart.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +21,23 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 	private static final Logger logger = LoggerFactory.getLogger(SubCategoryController.class);
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
-	
+	/* @Author Ankita Ghayal */
 	@Override
 	public SubCategory getSubCategoryById(Integer Id) {
-		
 		if(subCategoryRepository.findById(Id).isEmpty())
 			throw new SubCategoryNotFoundException("Requested SubCategoryId does not exist");
 		SubCategory subCategory = subCategoryRepository.findById(Id).get();
+		logger.info("In subcategory controller get SubCategory method");
 		return subCategory;
+	}
+	
+	/* @Author Ankita Ghayal */
+	@Override
+	public List<SubCategory> getSubCategory() {
+		List<SubCategory> subCategoryList = new ArrayList<SubCategory>();
+		subCategoryList = subCategoryRepository.findAll();
+		logger.info("In subcategory controller get SubCategoryList method");
+		return subCategoryList;
 	}
 	
 	@Override

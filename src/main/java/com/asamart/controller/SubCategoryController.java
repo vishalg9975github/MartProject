@@ -1,5 +1,8 @@
 package com.asamart.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +25,20 @@ public class SubCategoryController {
 	private SubCategoryService subCategoryService;
 	
 	/* @Author Ankita Ghayal */
-	@GetMapping("/getSubcategory/{id}")
+	//Design the restful web service to get subcategorybyId details into database
+	@GetMapping("/getSubCategory/{id}")
  	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id){
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
 		logger.info("In the Controller class,getSubCategoryById method");
 		return ResponseEntity.ok().body(subCategory);
+	}
+	/* @Author Ankita Ghayal */
+	//Design the restful web service to get all subcategory details from database
+	@GetMapping("getSubCategoryList")
+	public ResponseEntity<List<SubCategory>> getSubCategory(){
+		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
+		logger.info("In the Controller class,getSubCategoryList method");
+		return ResponseEntity.ok().body(subCategoryList);
 	}
 	
 	@PostMapping("/saveSubCategory")

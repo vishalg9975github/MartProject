@@ -1,5 +1,8 @@
 package com.asamart.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.asamart.controller.ProductController;
 import com.asamart.exceptions.CustomeExceptions;
 import com.asamart.model.Product;
+import com.asamart.model.SubCategory;
 import com.asamart.repository.ProductRepository;
 import com.asamart.service.ProductService;
 
@@ -18,11 +22,18 @@ public class ProductServiceImplementation implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
+	
+	/* @Author Ankita Ghayal */
+	@Override
+	public List<Product> getProduct() {
+		List<Product> productList = new ArrayList<Product>();
+		productList = productRepository.findAll();
+		logger.info("In product controller get ProductList method");
+		return productList;
+	}
+	
 	// @ Author -Anushka
-
 	// Update the product details by using id
-
 	@Override
 	public Product updateProductById(int id, Product product) {
 		logger.info("Update the product details by Id");
@@ -52,5 +63,7 @@ public class ProductServiceImplementation implements ProductService {
 		productRepository.deleteById(id);
 		
 	}
+
+	
 
 }
