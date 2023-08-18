@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -66,6 +67,23 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		}
 		return null;
 
+	}
+	
+	/* @ Auther Anushka*/
+
+	@Override
+	public List<ProductImage> getAllProductImage() {
+		logger.info("Fetching the data from ProductImage");
+		List<ProductImage> productImageList;
+		try
+		{
+			 productImageList=productImageRepository.findAll();
+		}
+		catch (Exception e) {
+			throw new ProductImageNotFoundException("There is no ProductImage !! Please add it..");
+		}
+		
+		return productImageList;
 	}
 
 }

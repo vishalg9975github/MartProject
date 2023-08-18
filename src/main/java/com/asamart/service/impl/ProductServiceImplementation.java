@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.asamart.controller.ProductController;
 import com.asamart.exceptions.CustomeExceptions;
+import com.asamart.exceptions.ProductException;
 import com.asamart.model.Product;
 import com.asamart.repository.ProductRepository;
 import com.asamart.service.ProductService;
@@ -36,10 +37,8 @@ public class ProductServiceImplementation implements ProductService {
 
 		int pid = product.getProductid();
 		pid = id;
-		Product product2 = new Product();
-		try {
-
-			product2 = productRepository.findById(pid).get();
+		
+		Product product2 = productRepository.findById(pid).get();
 			product2.setBrand(product.getBrand());
 			product2.setFeatured(false);
 			product2.setProductcode(product.getProductcode());
@@ -47,10 +46,7 @@ public class ProductServiceImplementation implements ProductService {
 			product2.setProductname(product.getProductname());
 			product2.setTags(product.getTags());
 
-		} catch (Exception e) {
-			throw new CustomeExceptions("Product id " + id + " is incorrect..");
-		}
-		return product2;
+			return product2;
 	}
 
 	@Override

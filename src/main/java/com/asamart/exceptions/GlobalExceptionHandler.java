@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,6 +44,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<String>("data not found in database", HttpStatus.NOT_FOUND);
 	}
 	
+	public ResponseEntity<Object> httpMessageNotReadableException(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	{
+		return new ResponseEntity<Object>("data not found in database", HttpStatus.NOT_FOUND);
+		
+	}
 	
+	/*
+	public ResponseEntity<Object> handleIdNotFound(HttpMessageNotReadableException ex,HttpHeaders headers,HttpStatus status,WebRequest request)
+	{
+		return new ResponseEntity<Object> ("Id Not found",HttpStatus.NOT_FOUND);
+		
+	}
 	
+*/
 }

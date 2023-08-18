@@ -1,9 +1,12 @@
 package com.asamart.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,9 @@ public class Product {
 	private String productcode;
 	private boolean featured;
 
+	@OneToMany(mappedBy ="productid")
+	private List<ProductImage> productImageList;
+	
 	public int getProductid() {
 		return productid;
 	}
@@ -79,11 +85,21 @@ public class Product {
 		this.featured = featured;
 	}
 
+	public List<ProductImage> getProductImageList() {
+		return productImageList;
+	}
+
+	public void setProductImageList(List<ProductImage> productImageList) {
+		this.productImageList = productImageList;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
 				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
-				+ ", featured=" + featured + "]";
+				+ ", featured=" + featured + ", productImageList=" + productImageList + "]";
 	}
+
+	
 
 }
