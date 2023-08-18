@@ -1,6 +1,5 @@
 package com.asamart.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +8,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asamart.model.Product;
 import com.asamart.service.ProductService;
 
 @RestController
+@RequestMapping("/Product")
 public class ProductController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -22,7 +23,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	//@Author- Anushka
+	// @Author- Anushka
 
 	@PutMapping("/updateProductById/{id}")
 	public ResponseEntity<Product> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
@@ -31,14 +32,13 @@ public class ProductController {
 		return ResponseEntity.ok().body(product2);
 
 	}
-	
-	//@Author- Sachin More
+
+	// @Author- Sachin More
 
 	@DeleteMapping("/deleteProduct/{id}")
 	public void deleteProductById(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
 		logger.info("in productcontroller class deletemapping");
 	}
-
 
 }
