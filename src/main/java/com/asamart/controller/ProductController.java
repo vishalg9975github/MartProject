@@ -47,8 +47,9 @@ public class ProductController {
 
 	@DeleteMapping("/deleteProduct/{id}")
 	public void deleteProductById(@PathVariable("id") Integer id) {
-		logger.info("in productcontroller class deletemapping");
 		productService.deleteProduct(id);
+		logger.info("in productcontroller class deletemapping");
+		
 		//System.out.println("product deleted successfully");
 		
 	}

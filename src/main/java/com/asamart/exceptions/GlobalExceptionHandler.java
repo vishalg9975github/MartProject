@@ -42,5 +42,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			EmptyResultDataAccessException emptyResultDataAccessException) {
 		return new ResponseEntity<String>("data not found in database", HttpStatus.NOT_FOUND);
 	}
+	
 
 }
