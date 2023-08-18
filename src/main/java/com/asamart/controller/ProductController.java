@@ -10,29 +10,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.asamart.model.Product;
 import com.asamart.service.ProductService;
 
 @RestController
+@RequestMapping("/Product")
 public class ProductController {
-
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	@Autowired
-	private ProductService productService; 
+	private ProductService productService;
 
-	/*Author name - Nandini Borase*/
+	/* Author name - Nandini Borase */
 
 	// Design the Restful web services to save the product data into database.
 	@PostMapping("/saveProduct")
 	public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
-		Product pro = productService.saveProduct(product); 
+		Product pro = productService.saveProduct(product);
 		logger.info("In the Controller class,saveProduct method");
-		return ResponseEntity.ok().body(pro); 
+		return ResponseEntity.ok().body(pro);
 	}
-
-
 
 	// @Author- Anushka
 
