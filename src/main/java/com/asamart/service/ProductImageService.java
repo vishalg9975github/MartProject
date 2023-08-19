@@ -10,4 +10,8 @@ public interface ProductImageService {
 	ProductImage updateProductImage(int imageId, int productid, boolean defaultImage, MultipartFile image);
 
 	public void deleteProductImage(Integer imageId);
+
+	public void softDeleteProduct(Integer id);
+
+	public void recoverDeletedProduct(Integer id);
 }

@@ -17,6 +17,7 @@ public class ProductImage {
 	private String imagePath;
 	private int productid;
 	private boolean defaultImage;
+	private boolean isDeleted;
 
 	public int getImageId() {
 		return imageId;
@@ -49,5 +50,20 @@ public class ProductImage {
 	public void setDefaultImage(boolean defaultImage) {
 		this.defaultImage = defaultImage;
 	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductImage [imageId=" + imageId + ", imagePath=" + imagePath + ", productid=" + productid
+				+ ", defaultImage=" + defaultImage + ", isDeleted=" + isDeleted + "]";
+	}
+	
 
 }

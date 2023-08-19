@@ -10,10 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.exceptions.ProductImageNotFoundException;
 import com.asamart.exceptions.ProductImageUpdateException;
+import com.asamart.model.Product;
 import com.asamart.model.ProductImage;
 import com.asamart.repository.ProductImageRepository;
 import com.asamart.service.ProductImageService;
@@ -67,12 +69,34 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		return null;
 
 	}
-	//Author sachin more
+
+	// Author sachin more
 	@Override
 	public void deleteProductImage(Integer imageId) {
 		productImageRepository.deleteById(imageId);
-		
-		
+
+	}
+
+	// Author sachin more
+	// soft delete in db
+	@Transactional
+	public void softDeleteProduct(Integer productImageId) {
+		ProductImage productImage = productImageRepository.findById(productImageId).orElse(null);
+		if (productImage != null) {
+			productImage.setDeleted(true);
+			productImageRepository.save(productImage);
+		}
+	}
+
+	// Author sachin more
+	// recover deleted productimage
+	@Transactional
+	public void recoverDeletedProduct(Integer productImageId) {
+		ProductImage productImage = productImageRepository.findById(productImageId).orElse(null);
+		if (productImage != null) {
+			productImage.setDeleted(false);
+			productImageRepository.save(productImage);
+		}
 	}
 
 }

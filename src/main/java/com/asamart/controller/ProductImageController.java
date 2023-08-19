@@ -92,4 +92,20 @@ public class ProductImageController {
 
 	}
 
+	// @Author - sachin more
+	@DeleteMapping("/softDeleteProductImage/{id}")
+	public ResponseEntity<String> softDeleteProduct(@PathVariable Integer id) {
+		productImageService.softDeleteProduct(id);
+
+		return ResponseEntity.ok("Product soft deleted successfully");
+	}
+
+	// @Author - sachin more
+	@PostMapping("/recoverProductImage/{id}")
+	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
+		productImageService.recoverDeletedProduct(id);
+
+		return ResponseEntity.ok("Product recovered successfully");
+	}
+
 }
