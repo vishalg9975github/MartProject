@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.Category;
+import com.asamart.model.ProductImage;
 import com.asamart.service.CategoryService;
 
 @RestController
@@ -36,27 +39,9 @@ public class CategoryController {
 
 	/* @Author Nilesh */ // modified By shiwani
 	@PostMapping("/addCategory")
-	public Category createCategory(@RequestParam("file") MultipartFile file,
-			@RequestParam("categoryname") String categoryname, @RequestParam("description") String description,
-			@RequestParam("createddate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createddate,
-			@RequestParam("createdBy") String createdBy) {
-		logger.info("In rest controller class, add category details");
-		try {
-			byte[] imageBytes = file.getBytes();
-
-			Category category = new Category();
-			category.setCategoryname(categoryname);
-			category.setDescription(description);
-			category.setCreateddate(new Date());
-			category.setCreatedBy(createdBy);
-			category.setImage(imageBytes);
-
-			return categoryService.addCategory(category);
-		} catch (IOException e) {
-			e.printStackTrace();
-			// Handle the exception as needed
-			return null;
-		}
+	public Category addCategory(@RequestParam("image") MultipartFile image, @ModelAttribute Category category)
+			throws IOException {
+		return categoryService.addCategory(category, image);
 	}
 
 	/* @Author Shiwani Dewang */
@@ -72,37 +57,15 @@ public class CategoryController {
 		return ResponseEntity.ok(category);
 	}
 
-	@PutMapping("/updateCategory/{id}")
-	public ResponseEntity<Map<String, Object>> updateCategory(@PathVariable Integer id,
-			@RequestParam("file") MultipartFile file, @RequestParam("categoryname") String categoryname,
-			@RequestParam("description") String description, @RequestParam("createdBy") String createdBy) {
-		Category existingCategory = categoryService.getCategoryById(id);
+	/* @Author Shiwani Dewang */
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
+			@RequestParam(value = "image", required = false) MultipartFile image, @ModelAttribute Category category)
+			throws IOException {
+		logger.info("In rest controller class , update category details by Id");
 
-		if (existingCategory == null) {
-			return ResponseEntity.notFound().build();
-		}
-
-		try {
-			byte[] imageBytes = file.getBytes();
-
-			existingCategory.setCategoryname(categoryname);
-			existingCategory.setDescription(description);
-
-			existingCategory.setCreatedBy(createdBy);
-			existingCategory.setImage(imageBytes);
-
-			Category savedCategory = categoryService.updateCategory(existingCategory);
-			// Create a custom response with updated category details and a message
-			Map<String, Object> response = new HashMap<>();
-			response.put("category", savedCategory);
-			response.put("message", "Category updated successfully.");
-
-			return ResponseEntity.ok(response);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		Category category1 = categoryService.updateCategory(id, category, image);
+		return ResponseEntity.ok(category1);
 
 	}
 
