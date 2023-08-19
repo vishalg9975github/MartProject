@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,6 +42,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<String> handleEmptyResultDataAccessException(
 			EmptyResultDataAccessException emptyResultDataAccessException) {
 		return new ResponseEntity<>("data not found in database", HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ResponseEntity<String> handleInternalAuthenticationServiceException(
+			InternalAuthenticationServiceException internalAuthenticationServiceException) {
+		return new ResponseEntity<>("User already exist in DB ", HttpStatus.NOT_ACCEPTABLE);
 	}
 
 
