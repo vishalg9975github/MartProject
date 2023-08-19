@@ -49,9 +49,9 @@ public class ProductController {
 	public void deleteProductById(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
 		logger.info("in productcontroller class deletemapping");
-		
-		//System.out.println("product deleted successfully");
-		
+
+		// System.out.println("product deleted successfully");
+
 	}
 
 	// @Auther - Younus Shaikh
@@ -62,6 +62,22 @@ public class ProductController {
 		logger.info("In Rest Contoller , get Product data");
 		return ResponseEntity.ok().body(pro);
 
+	}
+
+	// @Author - sachin more
+	@DeleteMapping("/softDeleteProduct/{id}")
+	public ResponseEntity<String> softDeleteProduct(@PathVariable Integer id) {
+		productService.softDeleteProduct(id);
+
+		return ResponseEntity.ok("Product soft deleted successfully");
+	}
+
+	// @Author - sachin more
+	@PostMapping("/recoverProduct/{id}")
+	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
+		productService.recoverDeletedProduct(id);
+
+		return ResponseEntity.ok("Product recovered successfully");
 	}
 
 }

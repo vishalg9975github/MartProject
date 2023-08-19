@@ -16,4 +16,10 @@ public interface ProductService {
 	//Get Product by Id
 	public Product getProductById(Integer Id);
 	
+	//soft delete 
+	public void softDeleteProduct(Integer id);
+
+	//recover deleted
+	public void recoverDeletedProduct(Integer id);
+	
 }

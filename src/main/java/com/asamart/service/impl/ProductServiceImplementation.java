@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.asamart.controller.ProductController;
 import com.asamart.exceptions.CustomeExceptions;
@@ -18,7 +19,7 @@ public class ProductServiceImplementation implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	// @ Author -Nandini
 	@Override
 	public Product saveProduct(Product pd) {
@@ -53,14 +54,16 @@ public class ProductServiceImplementation implements ProductService {
 		return product2;
 	}
 
+	// Author sachin more
+	// permanently delete product
 	@Override
 	public void deleteProduct(Integer id) {
 		logger.info("in ProductService class delete method");
 		productRepository.deleteById(id);
-		
+
 	}
 
-	//Get Product details by using Id
+	// Get Product details by using Id
 	@Override
 	public Product getProductById(Integer Id) {
 		logger.info("In ProductServiceImpl , getProduct Data");
@@ -68,4 +71,29 @@ public class ProductServiceImplementation implements ProductService {
 		return product;
 	}
 
+	// Author sachin more
+	// soft delete in db
+	@Transactional
+	public void softDeleteProduct(Integer productId) {
+		Product product = productRepository.findById(productId).orElse(null);
+		if (product != null) {
+			product.setDeleted(true);
+			productRepository.save(product);
+		}
+	}
+
+	// Author sachin more
+	// recover deleted product
+	@Transactional
+	public void recoverDeletedProduct(Integer productId) {
+		Product product = productRepository.findById(productId).orElse(null);
+		if (product != null) {
+			product.setDeleted(false);
+			productRepository.save(product);
+
+		}
+
+	}
+
+	
 }

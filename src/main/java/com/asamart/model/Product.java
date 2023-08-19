@@ -22,6 +22,7 @@ public class Product {
 	private String tags;
 	private String productcode;
 	private boolean featured;
+	private boolean isDeleted;
 
 	public int getProductid() {
 		return productid;
@@ -79,11 +80,21 @@ public class Product {
 		this.featured = featured;
 	}
 
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
 				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
-				+ ", featured=" + featured + "]";
+				+ ", featured=" + featured + ", isDeleted=" + isDeleted + "]";
 	}
+
+	
 
 }
