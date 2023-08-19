@@ -1,5 +1,8 @@
 package com.asamart.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,15 @@ public class ProductServiceImplementation implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	/* @Author Ankita Ghayal */
+	@Override
+	public List<Product> getProduct() {
+		List<Product> productList = new ArrayList<>();
+		productList = productRepository.findAll();
+		logger.info("In product controller get ProductList method");
+		return productList;
+	}
+
 	// @ Author -Nandini
 	@Override
 	public Product saveProduct(Product pd) {
@@ -28,9 +40,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	// @ Author -Anushka
-
 	// Update the product details by using id
-
 	@Override
 	public Product updateProductById(int id, Product product) {
 		logger.info("Update the product details by Id");
@@ -95,5 +105,4 @@ public class ProductServiceImplementation implements ProductService {
 
 	}
 
-	
 }

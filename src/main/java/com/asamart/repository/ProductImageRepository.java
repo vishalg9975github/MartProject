@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.asamart.model.ProductImage;
 
 @Repository
-public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
+public interface ProductImageRepository extends JpaRepository<ProductImage,Integer >{
+
+
 
 }
+
