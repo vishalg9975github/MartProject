@@ -1,19 +1,20 @@
 package com.asamart.service.impl;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Optional;
+import java.nio.file.Paths;
+import java.util.UUID;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.asamart.exceptions.ProductImageNotFoundException;
-import com.asamart.exceptions.ProductImageUpdateException;
 import com.asamart.model.ProductImage;
 import com.asamart.repository.ProductImageRepository;
 import com.asamart.service.ProductImageService;
@@ -23,48 +24,45 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	private static final Logger logger = LoggerFactory.getLogger(ProductServiceImplementation.class);
 	@Autowired
 	private ProductImageRepository productImageRepository;
+	@Value("${UPLOAD_DIR}")
+	private String uploadDirectory;
 
 	/* @Auther - shiwani dewang */
 	@Override
-	public ProductImage addProductImage(ProductImage productImage) {
-		ProductImage productImage1 = productImageRepository.save(productImage);
-		logger.info("In product service implementation class,addproduct");
-		return productImage1;
+	public ProductImage addProductImage(ProductImage productImage, MultipartFile image) throws IOException {
+		String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+		Path imagePath = Paths.get(uploadDirectory, filename);
+		Files.write(imagePath, image.getBytes());
+		logger.debug("In ProductImageService implementation class,addProductImage method");
+		productImage.setImagePath(imagePath.toString());
+		return productImageRepository.save(productImage);
+
 	}
 
 	/* @ Auther shiwani dewang */
 	@Override
-	public ProductImage updateProductImage(int imageId, int productid, boolean defaultImage, MultipartFile image) {
-		final String UPLOAD_DIR = "E:/ProjectVelocity/image";
-		Optional<ProductImage> existingImageOptional = productImageRepository.findById(imageId);
-		if (existingImageOptional.isPresent()) {
-			logger.info("In productImageService implemnation class, update productImage method");
-			ProductImage existingImage = existingImageOptional.get();
-			existingImage.setProductid(productid);
-			existingImage.setDefaultImage(defaultImage);
-			// Update image file if provided
-			if (image != null) {
-				String fileName = image.getOriginalFilename();
-				String filePath = UPLOAD_DIR + File.separator + fileName;
+	public ProductImage updateProductImage(int imageId, ProductImage updatedImage, MultipartFile image)
+			throws IOException {
+		ProductImage existingImage = productImageRepository.findById(imageId)
+				.orElseThrow(() -> new EntityNotFoundException("Product image not found"));
+		logger.debug("In ProductImageservice implementation class,updateProductImage method");
+		existingImage.setProductid(updatedImage.getProductid());
+		existingImage.setDefaultImage(updatedImage.isDefaultImage());
+		logger.info("In ProductImage service implementation class, updateproductImage method");
+		// Save new image file if provided
+		if (image != null && !image.isEmpty()) {
+			// Delete old image
+			System.out.println("Deleting previous image: " + existingImage.getImagePath());
+			Files.deleteIfExists(Paths.get(existingImage.getImagePath()));
 
-				try {
-					Path targetPath = Path.of(filePath);
-					Files.copy(image.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-					existingImage.setImagePath(filePath);
-				} catch (Exception e) {
-					throw new ProductImageUpdateException("Error updating image: " + e.getMessage());
-				}
-
-				return productImageRepository.save(existingImage);
-
-			} else {
-				throw new ProductImageNotFoundException("Image with ID " + imageId + " not found");
-			}
+			// Save new image file
+			String filename = image.getOriginalFilename();
+			Path imagePath = Paths.get(uploadDirectory, filename);
+			Files.write(imagePath, image.getBytes());
+			existingImage.setImagePath(imagePath.toString());
 		}
-		if (!existingImageOptional.isPresent()) {
-			throw new ProductImageNotFoundException("Image with ID " + imageId + " is not exist");
-		}
-		return null;
+
+		return productImageRepository.save(existingImage);
 
 	}
 

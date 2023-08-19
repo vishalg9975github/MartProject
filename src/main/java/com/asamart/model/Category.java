@@ -24,14 +24,10 @@ public class Category {
 	private int id;
 	private String categoryname;
 	private String description;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createddate;
-
 	private String createdBy;
-
-	@Lob
-	private byte[] image;
+	private String imagePath;
 
 	@OneToMany(mappedBy = "categoryid")
 	private List<SubCategory> subCategory;
@@ -76,12 +72,12 @@ public class Category {
 		this.createdBy = createdBy;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public String getImagePath() {
+		return imagePath;
 	}
 
-	public byte[] getImage() {
-		return image;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public List<SubCategory> getSubCategory() {
