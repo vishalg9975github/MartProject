@@ -28,7 +28,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityfilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).authorizeRequests().antMatchers("/home/**").authenticated()
-				.antMatchers("/Category/**", "/Product/**", "/Image/**", "/SubCategory/**", "/Test/**").permitAll()
+				.antMatchers("/Category/**", "/Product/**", "/Image/**", "/SubCategory/**", "/Test/**","/ProductPrice/**").permitAll()
 				.antMatchers("/auth/login").permitAll().antMatchers("/auth/create-user").permitAll().anyRequest()
 				.authenticated().and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

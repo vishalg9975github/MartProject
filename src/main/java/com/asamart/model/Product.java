@@ -2,6 +2,7 @@ package com.asamart.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,17 @@ public class Product {
 
 	@OneToMany(mappedBy = "productid")
 	private List<ProductImage> getAllImages;
+
+	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
+	private List<ProductPrice> productPrice;
+
+	public List<ProductPrice> getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(List<ProductPrice> productPrice) {
+		this.productPrice = productPrice;
+	}
 
 	public List<ProductImage> getGetAllImages() {
 		return getAllImages;
