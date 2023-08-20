@@ -1,6 +1,5 @@
 package com.asamart.controller;
 
-
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.ProductImage;
 import com.asamart.service.ProductImageService;
-
 
 @RestController
 @RequestMapping("/Image")
@@ -60,15 +58,17 @@ public class ProductImageController {
 		// System.out.println("product deleted successfully");
 
 	}
-	//@Author Swapnil Gawai
-    @GetMapping("/images")
+
+	// @Author Swapnil Gawai
+	@GetMapping("/images")
 	public List<ProductImage> getAllImages() {
 
 		List<ProductImage> getAllImages = productImageService.getAllImages();
 
 		return getAllImages;
 
-    }
+	}
+
 	// @Author - sachin more
 	@DeleteMapping("/softDeleteProductImage/{id}")
 	public ResponseEntity<String> softDeleteProduct(@PathVariable Integer id) {
@@ -86,4 +86,3 @@ public class ProductImageController {
 	}
 
 }
-

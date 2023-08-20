@@ -4,6 +4,8 @@ package com.asamart.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +69,15 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 			throw new RuntimeException("SubCategeory not found");
 		}
 
+	}
+	
+    //@Author Swapnil Gawai
+	@Transactional
+	public void softDeleteSubCategory(Integer subCategoryId) {
+		SubCategory subCategory=subCategoryRepository.findById(subCategoryId).orElse(null);
+		if (subCategory != null) {
+			subCategory.setDeleted(false);
+			subCategoryRepository.save(subCategory);
+		}
 	}
 }
