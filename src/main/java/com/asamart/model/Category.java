@@ -33,6 +33,7 @@ public class Category {
 
 	@Lob
 	private byte[] image;
+	private boolean isDeleted = false;
 
 	@OneToMany(mappedBy = "categoryid")
 	private List<SubCategory> subCategory;
@@ -91,6 +92,14 @@ public class Category {
 
 	public void setSubCategory(List<SubCategory> subCategory) {
 		this.subCategory = subCategory;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	@PrePersist

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -113,6 +114,14 @@ public class CategoryController {
 		// Return all category Details
 		return allCategoryDetails;
 
+	}
+
+	/* @Author- vishal waghmare */
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> softdeleteCategoryById(@PathVariable("id") Integer id) {
+		logger.info("In rest controller class , delete category details by Id");
+		categoryService.softdeleteCategory(id);
+		return ResponseEntity.ok("category soft deleted successfully");
 	}
 
 }

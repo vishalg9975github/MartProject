@@ -2,11 +2,11 @@ package com.asamart.service.impl;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.asamart.model.Category;
 import com.asamart.repository.CategoryRepository;
 import com.asamart.service.CategoryService;
@@ -35,12 +35,24 @@ public class CategoryServiceImplementation implements CategoryService {
 		return categoryRepository.save(category);
 
 	}
-	
+
 //Author: Summit Gaikwad
 	@Override
 	public List<Category> getAllDetails() {
-       return categoryRepository.findAll();
-       
+		return categoryRepository.findAll();
+
+	}
+
+	/* @Author- vishal Waghmare */
+	@Transactional
+	@Override
+	public void softdeleteCategory(Integer id) {
+		// Soft delete by updating the isDeleted flag
+		Category category = categoryRepository.findById(id).orElseGet(null);
+		if (category != null) {
+			category.setDeleted(true);
+			categoryRepository.save(category);
+		}
 	}
 
 }
