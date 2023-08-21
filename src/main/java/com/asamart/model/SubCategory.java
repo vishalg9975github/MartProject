@@ -1,6 +1,7 @@
 package com.asamart.model;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,16 @@ public class SubCategory {
 	private String subcategoryname;
 	private int categoryid;
 	private String description;
+
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createddate;
