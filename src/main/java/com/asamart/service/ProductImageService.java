@@ -1,6 +1,5 @@
 package com.asamart.service;
 
-
 import java.io.IOException;
 
 import java.util.List;
@@ -11,18 +10,15 @@ import com.asamart.model.ProductImage;
 
 public interface ProductImageService {
 
-	
-	// Add ProductImage  
+	// Add ProductImage
 	ProductImage addProductImage(ProductImage productImage);
 
 	// Update ProductImage
 	ProductImage updateProductImage(int imageId, int productid, boolean defaultImage, MultipartFile image);
 
-	//Get ProductImages by id
-	
-	public ProductImage getProductImageById(int imageId);
-	
+	// Get ProductImages by id
 
+	public ProductImage getProductImageById(int imageId);
 
 	List<ProductImage> getAllImages();
 
@@ -32,7 +28,13 @@ public interface ProductImageService {
 			throws IOException;
 
 	public void deleteProductImage(Integer imageId);
-	
-	
-	
+
+	public void softDeleteProduct(Integer id);
+
+	public void recoverDeletedProduct(Integer id);
+
+	boolean imageExistsInDatabase(String imageHash);
+
+	void saveProductImage(ProductImage productImage);
+
 }

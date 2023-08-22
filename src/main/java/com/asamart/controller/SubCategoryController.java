@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class SubCategoryController {
 	private SubCategoryService subCategoryService;
 
 	/* @Author Ankita Ghayal */
-	//Design the restful web service to get subcategorybyId details into database
+	// Design the restful web service to get subcategorybyId details into database
 	@GetMapping("/getSubcategory/{id}")
 	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
@@ -35,17 +36,15 @@ public class SubCategoryController {
 	}
 
 	/* @Author Ankita Ghayal */
-	//Design the restful web service to get all subcategory details from database
+	// Design the restful web service to get all subcategory details from database
 	@GetMapping("getSubCategoryList")
-	public ResponseEntity<List<SubCategory>> getSubCategory(){
+	public ResponseEntity<List<SubCategory>> getSubCategory() {
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
 		logger.info("In the Controller class,getSubCategoryList method");
 		return ResponseEntity.ok().body(subCategoryList);
 	}
 
-
-
-
+	// @Author Swapnil Gawai
 	@PostMapping("/saveSubCategory")
 	public ResponseEntity<SubCategory> saveSubCategory(@RequestBody SubCategory subCategory) {
 
@@ -62,4 +61,13 @@ public class SubCategoryController {
 		logger.info("In subcategory controller update SubCategory method ");
 		return ResponseEntity.ok().body(sub1);
 	}
+
+	// @Author Swapnil Gawai
+	@DeleteMapping("/softDeleteSubCategory/{id}")
+	public ResponseEntity<String> softDeleteSubCategory(@PathVariable Integer id) {
+		subCategoryService.softDeleteSubCategory(id);
+
+		return ResponseEntity.ok("SubCategory  deleted successfully");
+	}
+
 }

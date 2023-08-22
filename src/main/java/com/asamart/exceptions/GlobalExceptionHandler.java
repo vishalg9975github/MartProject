@@ -1,11 +1,16 @@
 package com.asamart.exceptions;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.NoSuchElementException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -45,5 +50,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	
-	
+	@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ResponseEntity<String> handleInternalAuthenticationServiceException(
+			InternalAuthenticationServiceException internalAuthenticationServiceException) {
+		return new ResponseEntity<>("User already exist in DB ", HttpStatus.NOT_ACCEPTABLE);
+	}
+
+
 }
