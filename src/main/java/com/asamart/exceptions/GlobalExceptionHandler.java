@@ -1,8 +1,11 @@
 package com.asamart.exceptions;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.NoSuchElementException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,12 +46,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			EmptyResultDataAccessException emptyResultDataAccessException) {
 		return new ResponseEntity<>("data not found in database", HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(InternalAuthenticationServiceException.class)
 	public ResponseEntity<String> handleInternalAuthenticationServiceException(
 			InternalAuthenticationServiceException internalAuthenticationServiceException) {
 		return new ResponseEntity<>("User already exist in DB ", HttpStatus.NOT_ACCEPTABLE);
 	}
-
 
 }

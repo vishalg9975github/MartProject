@@ -21,4 +21,9 @@ public interface ProductImageService {
 	public void softDeleteProduct(Integer id);
 
 	public void recoverDeletedProduct(Integer id);
+
+	boolean imageExistsInDatabase(String imageHash);
+
+	void saveProductImage(ProductImage productImage);
+
 }

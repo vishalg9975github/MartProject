@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.List;
+
+import java.nio.file.StandardCopyOption;
+
 import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
@@ -13,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +56,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		ProductImage existingImage = productImageRepository.findById(imageId)
 				.orElseThrow(() -> new EntityNotFoundException("Product image not found"));
 		logger.debug("In ProductImageservice implementation class,updateProductImage method");
-		existingImage.setProductid(updatedImage.getProductid());
+		// existingImage.setProductid(updatedImage.getProductid());
 		existingImage.setDefaultImage(updatedImage.isDefaultImage());
 		logger.info("In ProductImage service implementation class, updateproductImage method");
 		// Save new image file if provided
@@ -105,6 +110,18 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	public List<ProductImage> getAllImages() {
 
 		return productImageRepository.findAll();
+	}
+
+	/* @Auther shiwani dewang */
+	@Override
+	public boolean imageExistsInDatabase(String imageHash) {
+		return productImageRepository.existsByImageHash(imageHash);
+	}
+
+	@Override
+	public void saveProductImage(ProductImage productImage) {
+		productImageRepository.save(productImage);
+
 	}
 
 }

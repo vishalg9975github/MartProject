@@ -1,5 +1,6 @@
 package com.asamart.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class HomeController {
 	@GetMapping("/users")
 	public List<User> getUser() {
 		return this.userService.getUser();
+
+	}
+
+	@GetMapping("/current-user")
+	public String getLoggedInUser(Principal principal) {
+		return principal.getName();
 
 	}
 

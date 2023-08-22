@@ -1,5 +1,7 @@
 package com.asamart.model;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,6 +28,7 @@ public class Product {
 	private String tags;
 	private String productcode;
 	private boolean featured;
+
 	private boolean isDeleted;
 
 	@OneToMany(mappedBy = "productid")
@@ -49,6 +52,9 @@ public class Product {
 	public void setGetAllImages(List<ProductImage> getAllImages) {
 		this.getAllImages = getAllImages;
 	}
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductImage> images = new ArrayList<>();
 
 	public int getProductid() {
 		return productid;
@@ -112,6 +118,15 @@ public class Product {
 
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
+
 	}
 
 	@Override

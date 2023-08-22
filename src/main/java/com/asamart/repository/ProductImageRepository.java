@@ -10,5 +10,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage,Integ
 
 
 
+	boolean existsByImageHash(String imageHash);
+
 }
 
