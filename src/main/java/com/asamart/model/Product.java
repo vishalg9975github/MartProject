@@ -26,9 +26,20 @@ public class Product {
 	private String productcode;
 	private boolean featured;
 
-	@OneToMany(mappedBy ="productid")
-	private List<ProductImage> productImageList;
+
 	
+	@OneToMany(mappedBy = "productid")
+	private List<ProductImage> getAllImages;
+
+	public List<ProductImage> getGetAllImages() {
+		return getAllImages;
+	}
+
+	public void setGetAllImages(List<ProductImage> getAllImages) {
+		this.getAllImages = getAllImages;
+	}
+
+
 	public int getProductid() {
 		return productid;
 	}
@@ -85,21 +96,19 @@ public class Product {
 		this.featured = featured;
 	}
 
-	public List<ProductImage> getProductImageList() {
-		return productImageList;
-	}
-
-	public void setProductImageList(List<ProductImage> productImageList) {
-		this.productImageList = productImageList;
-	}
 
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
 				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
-				+ ", featured=" + featured + ", productImageList=" + productImageList + "]";
+				+ ", featured=" + featured +  "]";
 	}
 
 	
 
 }
+
+
+
+
+
