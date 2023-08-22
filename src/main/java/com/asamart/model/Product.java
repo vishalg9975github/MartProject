@@ -1,9 +1,14 @@
 package com.asamart.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +27,8 @@ public class Product {
 	private String tags;
 	private String productcode;
 	private boolean featured;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductImage> images = new ArrayList<>();
 
 	public int getProductid() {
 		return productid;
@@ -77,6 +84,14 @@ public class Product {
 
 	public void setFeatured(boolean featured) {
 		this.featured = featured;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
 	}
 
 	@Override

@@ -8,4 +8,6 @@ import com.asamart.model.ProductImage;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
 
+	boolean existsByImageHash(String imageHash);
+
 }

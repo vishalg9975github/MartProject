@@ -1,9 +1,12 @@
 package com.asamart.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +18,13 @@ public class ProductImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int imageId;
 	private String imagePath;
-	private int productid;
 	private boolean defaultImage;
+	private String imageHash;
+	// @Column(unique = true)
+	private String imageName;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
 
 	public int getImageId() {
 		return imageId;
@@ -34,14 +42,6 @@ public class ProductImage {
 		this.imagePath = imagePath;
 	}
 
-	public int getProductid() {
-		return productid;
-	}
-
-	public void setProductid(int productid) {
-		this.productid = productid;
-	}
-
 	public boolean isDefaultImage() {
 		return defaultImage;
 	}
@@ -50,4 +50,27 @@ public class ProductImage {
 		this.defaultImage = defaultImage;
 	}
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public String getImageHash() {
+		return imageHash;
+	}
+
+	public void setImageHash(String imageHash) {
+		this.imageHash = imageHash;
+	}
 }

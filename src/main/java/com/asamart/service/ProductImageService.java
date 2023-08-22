@@ -13,4 +13,9 @@ public interface ProductImageService {
 			throws IOException;
 
 	public void deleteProductImage(Integer imageId);
+
+	boolean imageExistsInDatabase(String imageHash);
+
+	void saveProductImage(ProductImage productImage);
+
 }

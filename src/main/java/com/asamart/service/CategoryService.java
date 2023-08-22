@@ -17,4 +17,11 @@ public interface CategoryService {
 
 	List<Category> getAllDetails();
 
+	List<Category> getActiveCategories();
+
+	void softDeleteCategory(Integer id);
+
+	void deleteCategoryById(Integer id);
+
+	Category getActiveCategoryById(Integer id) throws Exception;
 }
