@@ -3,8 +3,11 @@ package com.asamart.service.impl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
+
+import java.nio.file.Paths;
+
 import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
@@ -13,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +30,7 @@ import com.asamart.service.ProductImageService;
 
 @Service
 public class ProductImageServiceImplementation implements ProductImageService {
+
 	private static final Logger logger = LoggerFactory.getLogger(ProductServiceImplementation.class);
 	@Autowired
 	private ProductImageRepository productImageRepository;
@@ -51,7 +56,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		ProductImage existingImage = productImageRepository.findById(imageId)
 				.orElseThrow(() -> new EntityNotFoundException("Product image not found"));
 		logger.debug("In ProductImageservice implementation class,updateProductImage method");
-		existingImage.setProductid(updatedImage.getProductid());
+		// existingImage.setProductid(updatedImage.getProductid());
 		existingImage.setDefaultImage(updatedImage.isDefaultImage());
 		logger.info("In ProductImage service implementation class, updateproductImage method");
 		// Save new image file if provided
@@ -71,7 +76,18 @@ public class ProductImageServiceImplementation implements ProductImageService {
 
 	}
 
+
+	/* @ Auther Anushka */
+
+	@Override
+	public ProductImage getProductImageById(int imageId) {
+		logger.info("In ProductImage Service Implementation Class, getProductImageById method . ");
+
+		return productImageRepository.getProductImageAndNotDeleted(imageId);
+	}
+
 	
+
 	// Author sachin more
 	// soft delete in db
 	@Transactional
@@ -90,6 +106,36 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	public List<ProductImage> getAllImages() {
 
 		return productImageRepository.findAll();
+	}
+
+	@Override
+	public ProductImage addProductImage(com.asamart.model.ProductImage productImage) {
+		return productImage;
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public com.asamart.model.ProductImage updateProductImage(int imageId, int productid, boolean defaultImage,
+			MultipartFile image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*
+	 * @Override public ProductImage addProductImage(ProductImage productImage) { //
+	 * TODO Auto-generated method stub return null; }
+	 */
+
+	/* @Auther shiwani dewang */
+	@Override
+	public boolean imageExistsInDatabase(String imageHash) {
+		return productImageRepository.existsByImageHash(imageHash);
+	}
+
+	@Override
+	public void saveProductImage(ProductImage productImage) {
+		productImageRepository.save(productImage);
+
 	}
 
 }

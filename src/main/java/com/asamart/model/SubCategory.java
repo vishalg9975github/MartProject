@@ -22,6 +22,16 @@ public class SubCategory {
 	private int categoryid;
 	private String description;
 
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createddate;
 	private String createdBy;

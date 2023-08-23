@@ -1,16 +1,22 @@
 package com.asamart.repository;
 
-
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.asamart.model.Product;
 
-
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer>{
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	
+	@Query(value="select * from product where productname=?1", nativeQuery = true)
+
+	public String findByProductNmae(String bname);
+	
+	Product findByproductname(String productname);
+
+	public Object findByproductname1(String productname);
 }
+

@@ -3,10 +3,13 @@ package com.asamart.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -28,6 +31,9 @@ public class Category {
 	private Date createddate;
 	private String createdBy;
 	private String imagePath;
+	private String imageHash;
+	@Column(name = "isDeleted")
+	private boolean isDeleted;
 
 	@OneToMany(mappedBy = "categoryid")
 	private List<SubCategory> subCategory;
@@ -86,6 +92,22 @@ public class Category {
 
 	public void setSubCategory(List<SubCategory> subCategory) {
 		this.subCategory = subCategory;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public String getImageHash() {
+		return imageHash;
+	}
+
+	public void setImageHash(String imageHash) {
+		this.imageHash = imageHash;
 	}
 
 	@PrePersist
