@@ -51,15 +51,7 @@ public class ProductImageController {
 
 	}
 
-	// @Author- Sachin More
-
-	@DeleteMapping("/deleteProductImage/{imageId}")
-	public void deleteProductImageById(@PathVariable("imageId") Integer imageId) {
-		logger.info("in productImagecontroller class deletemapping");
-		productImageService.deleteProductImage(imageId);
-		// System.out.println("product deleted successfully");
-
-	}
+	
 	//@Author Swapnil Gawai
     @GetMapping("/images")
 	public List<ProductImage> getAllImages() {
@@ -77,13 +69,7 @@ public class ProductImageController {
 		return ResponseEntity.ok("Product soft deleted successfully");
 	}
 
-	// @Author - sachin more
-	@PostMapping("/recoverProductImage/{id}")
-	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
-		productImageService.recoverDeletedProduct(id);
-
-		return ResponseEntity.ok("Product recovered successfully");
-	}
+	
 
 }
 

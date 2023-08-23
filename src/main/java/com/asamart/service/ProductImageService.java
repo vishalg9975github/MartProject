@@ -16,9 +16,6 @@ public interface ProductImageService {
 	ProductImage updateProductImage(int imageId, ProductImage updatedImage, MultipartFile newImageFile)
 			throws IOException;
 
-	public void deleteProductImage(Integer imageId);
-
 	public void softDeleteProduct(Integer id);
 
-	public void recoverDeletedProduct(Integer id);
 }

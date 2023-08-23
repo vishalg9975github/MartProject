@@ -64,14 +64,7 @@ public class ProductServiceImplementation implements ProductService {
 		return product2;
 	}
 
-	// Author sachin more
-	// permanently delete product
-	@Override
-	public void deleteProduct(Integer id) {
-		logger.info("in ProductService class delete method");
-		productRepository.deleteById(id);
-
-	}
+	
 
 	// Get Product details by using Id
 	@Override
@@ -91,18 +84,6 @@ public class ProductServiceImplementation implements ProductService {
 			productRepository.save(product);
 		}
 	}
-
-	// Author sachin more
-	// recover deleted product
-	@Transactional
-	public void recoverDeletedProduct(Integer productId) {
-		Product product = productRepository.findById(productId).orElse(null);
-		if (product != null) {
-			product.setDeleted(false);
-			productRepository.save(product);
-
-		}
-
 	}
 
-}
+

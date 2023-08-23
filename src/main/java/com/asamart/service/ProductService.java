@@ -13,14 +13,10 @@ public interface ProductService {
 
 	public Product updateProductById(int id, Product product);
 
-	public void deleteProduct(Integer id);
-
 	// Get Product by Id
 	public Product getProductById(Integer Id);
 
 	// soft delete
 	public void softDeleteProduct(Integer id);
 
-	// recover deleted
-	public void recoverDeletedProduct(Integer id);
 }

@@ -56,14 +56,7 @@ public class ProductController {
 
 	}
 
-	// @Author- Sachin More
-
-	@DeleteMapping("/deleteProduct/{id}")
-	public void deleteProductById(@PathVariable("id") Integer id) {
-		productService.deleteProduct(id);
-		logger.info("in productcontroller class deletemapping");
-
-	}
+	
 
 	// @Auther - Younus Shaikh
 
@@ -83,12 +76,6 @@ public class ProductController {
 		return ResponseEntity.ok("Product soft deleted successfully");
 	}
 
-	// @Author - sachin more
-	@PostMapping("/recoverProduct/{id}")
-	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
-		productService.recoverDeletedProduct(id);
-
-		return ResponseEntity.ok("Product recovered successfully");
-	}
+	
 
 }
