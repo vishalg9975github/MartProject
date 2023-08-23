@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.Product;
 import com.asamart.service.ProductService;
@@ -27,9 +30,9 @@ public class ProductController {
 	private ProductService productService;
 
 	/* @Author Ankita Ghayal */
-	//Design the restful web service to get all productList details into database
+	// Design the restful web service to get all productList details into database
 	@GetMapping("getProductList")
-	public ResponseEntity<List<Product>> getProductList(){
+	public ResponseEntity<List<Product>> getProductList() {
 		List<Product> productList = productService.getProduct();
 		logger.info("In product controller get ProductList method");
 		return ResponseEntity.ok().body(productList);
@@ -47,7 +50,6 @@ public class ProductController {
 
 	// @Author- Anushka
 
-
 	@PutMapping("/updateProductById/{id}")
 	public ResponseEntity<Product> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
 		logger.info("Update the Records");
@@ -62,6 +64,8 @@ public class ProductController {
 	public void deleteProductById(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
 		logger.info("in productcontroller class deletemapping");
+
+		// System.out.println("product deleted successfully");
 
 	}
 
@@ -89,6 +93,23 @@ public class ProductController {
 		productService.recoverDeletedProduct(id);
 
 		return ResponseEntity.ok("Product recovered successfully");
+	}
+
+	// to add the product with images
+	// @author shiwani dewang
+	@PostMapping("/addProductImage")
+	public ResponseEntity<String> saveProductWithImages(@RequestParam String productname,
+			@RequestParam String productdescription, @RequestParam String brand, @RequestParam String tags,
+			@RequestParam String productcode, @RequestParam boolean featured,
+			@RequestParam("images") List<MultipartFile> image) throws Exception {
+		productService.saveProductWithImages(productname, productdescription, brand, tags, productcode, featured,
+				image);
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body("Product with images added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+
 	}
 
 }

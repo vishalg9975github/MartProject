@@ -33,9 +33,28 @@ public class CategoryController {
 
 	/* @Author Nilesh */ // modified By shiwani
 	@PostMapping("/addCategory")
-	public Category addCategory(@RequestParam("image") MultipartFile image, @ModelAttribute Category category)
+	public ResponseEntity<String> addCategory(@RequestParam("image") MultipartFile image,
+			@ModelAttribute Category category) throws IOException {
+		try {
+			logger.info("Category controller class , add category method");
+			categoryService.addCategory(category, image);
+			return ResponseEntity.status(HttpStatus.CREATED).body("Category added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+
+	}
+
+	/* @Author Shiwani Dewang */
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
+			@RequestParam(value = "image", required = false) MultipartFile image, @ModelAttribute Category category)
 			throws IOException {
-		return categoryService.addCategory(category, image);
+		logger.info("In rest controller class , update category details by Id");
+
+		Category category1 = categoryService.updateCategory(id, category, image);
+		return ResponseEntity.ok(category1);
+
 	}
 
 	/* @Author Shiwani Dewang */
@@ -49,18 +68,6 @@ public class CategoryController {
 		}
 
 		return ResponseEntity.ok(category);
-	}
-
-	/* @Author Shiwani Dewang */
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
-			@RequestParam(value = "image", required = false) MultipartFile image, @ModelAttribute Category category)
-			throws IOException {
-		logger.info("In rest controller class , update category details by Id");
-
-		Category category1 = categoryService.updateCategory(id, category, image);
-		return ResponseEntity.ok(category1);
-
 	}
 
 	/* Author:Sumit Gaikwad */
@@ -78,6 +85,28 @@ public class CategoryController {
 		logger.info("In rest controller class , delete category details by Id");
 		categoryService.softdeleteCategory(id);
 		return ResponseEntity.ok("category soft deleted successfully");
+	}
+
+	/*
+	 * for soft delete and to get the active categories which are not soft-deleted
+	 * 
+	 * @Auther Shiwani dewang
+	 */
+	@GetMapping("/allActiveCategoryList")
+	public List<Category> getActiveCategories() {
+		return categoryService.getActiveCategories();
+	}
+
+	/* @ Author - shiwani dewang */
+	@GetMapping("activeCategory/{id}")
+	public Category getActiveCategoryById(@PathVariable Integer id) throws Exception {
+		Category category = categoryService.getActiveCategoryById(id);
+		if (category != null) {
+			return category;
+		} else {
+			throw new Exception(" Category with Id " + id + " not found !! ");
+		}
+
 	}
 
 }
