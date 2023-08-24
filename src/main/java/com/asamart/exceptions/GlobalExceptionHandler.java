@@ -1,11 +1,17 @@
 package com.asamart.exceptions;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.NoSuchElementException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,20 +25,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EmptyInputException.class)
 	public ResponseEntity<String> handleEmptyInput(EmptyInputException emptyInputException) {
-		return new ResponseEntity<String>("input field is empty", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("Innput Field Is Empty", HttpStatus.BAD_REQUEST);
 	}
 
 	// @Author Sachin more this is for get
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException elementException) {
-		return new ResponseEntity<String>("No value present in database", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("Record Not Found In Database !! Please Change Your Request", HttpStatus.NOT_FOUND);
 	}
 
 	// @Author Sachin more - this is for in the postman wrong method is selection
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		return new ResponseEntity<Object>("please change http method type request", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("Please Change Http Method Type Request", HttpStatus.NOT_FOUND);
 
 	}
 
@@ -40,8 +46,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ResponseEntity<String> handleEmptyResultDataAccessException(
 			EmptyResultDataAccessException emptyResultDataAccessException) {
-		return new ResponseEntity<String>("data not found in database", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("Data Not Found In Database", HttpStatus.NOT_FOUND);
 	}
+
 	
+	@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ResponseEntity<String> handleInternalAuthenticationServiceException(
+			InternalAuthenticationServiceException internalAuthenticationServiceException) {
+		return new ResponseEntity<>("User already exist in DB ", HttpStatus.NOT_ACCEPTABLE);
+	}
+
 
 }

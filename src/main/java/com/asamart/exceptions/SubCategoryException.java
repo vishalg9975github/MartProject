@@ -4,26 +4,26 @@ import org.springframework.http.HttpStatus;
 
 /* Author name: Ankita Ghayal */
 
-public class SubCategoryException { 
-	
-	  
+public class SubCategoryException {
+
+
 	private final String message;
 	private final HttpStatus httpStatus;
-	
+
 	public SubCategoryException(String message, HttpStatus httpStatus) {
-	
+
 		this.message = message;
-		this.httpStatus = httpStatus; 
+		this.httpStatus = httpStatus;
 	}
-	
+
 	public String getMessage() {
 		return message;
 	}
-	
+
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}
-	
 
-	
+
+
 }

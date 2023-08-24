@@ -1,9 +1,15 @@
 package com.asamart.model;
 
+import java.util.ArrayList;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +28,31 @@ public class Product {
 	private String tags;
 	private String productcode;
 	private boolean featured;
+
+	private boolean isDeleted;
+
+	// @OneToMany(mappedBy = "productid")
+	// private List<ProductImage> getAllImages;
+
+	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
+	private List<ProductPrice> productPrice;
+
+	public List<ProductPrice> getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(List<ProductPrice> productPrice) {
+		this.productPrice = productPrice;
+	}
+	/*
+	 * public List<ProductImage> getGetAllImages() { return getAllImages; }
+	 * 
+	 * public void setGetAllImages(List<ProductImage> getAllImages) {
+	 * this.getAllImages = getAllImages; }
+	 */
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductImage> images = new ArrayList<>();
 
 	public int getProductid() {
 		return productid;
@@ -79,11 +110,20 @@ public class Product {
 		this.featured = featured;
 	}
 
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
 				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
-				+ ", featured=" + featured + "]";
+				+ ", featured=" + featured + ", isDeleted=" + isDeleted + ", productPrice=" + productPrice + ", images="
+				+ images + "]";
 	}
 
 }
