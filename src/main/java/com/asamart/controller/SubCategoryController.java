@@ -37,7 +37,7 @@ public class SubCategoryController {
 
 	/* @Author Ankita Ghayal */
 	//Design the restful web service to get all subcategory details from database
-	@GetMapping("getSubCategoryList")
+	@GetMapping("/getSubCategoryList")
 	public ResponseEntity<List<SubCategory>> getSubCategory(){
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
 		logger.info("In the Controller class,getSubCategoryList method");

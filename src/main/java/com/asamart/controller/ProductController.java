@@ -27,7 +27,7 @@ public class ProductController {
 	
 	/* @Author Ankita Ghayal */
 	//Design the restful web service to get all productList details into database
-	@GetMapping("getProductList")
+	@GetMapping("/getProductList")
 	public ResponseEntity<List<Product>> getProductList(){
 		List<Product> productList = productService.getProduct();
 		logger.info("In product controller get ProductList method");
