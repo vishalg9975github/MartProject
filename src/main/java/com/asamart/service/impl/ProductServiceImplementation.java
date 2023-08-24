@@ -56,13 +56,12 @@ public class ProductServiceImplementation implements ProductService {
 	@Override
 	public Product saveProduct(Product pd) {
 		logger.info("In the Controller class,saveProduct method");
-		
-		if(productRepository.findByProductNmae(pd.getProductname()) != null) 
-		{
-		return productRepository.save(pd);
-		
+
+		if (productRepository.findByProductNmae(pd.getProductname()) != null) {
+			return productRepository.save(pd);
+
 		}
-		
+
 		return productRepository.save(pd);
 	}
 
@@ -74,16 +73,16 @@ public class ProductServiceImplementation implements ProductService {
 
 		int pid = product.getProductid();
 		pid = id;
-		
-		Product product2 = productRepository.findById(pid).get();
-			product2.setBrand(product.getBrand());
-			product2.setFeatured(false);
-			product2.setProductcode(product.getProductcode());
-			product2.setProductdescription(product2.getProductdescription());
-			product2.setProductname(product.getProductname());
-			product2.setTags(product.getTags());
 
-			return product2;
+		Product product2 = productRepository.findById(pid).get();
+		product2.setBrand(product.getBrand());
+		product2.setFeatured(false);
+		product2.setProductcode(product.getProductcode());
+		product2.setProductdescription(product2.getProductdescription());
+		product2.setProductname(product.getProductname());
+		product2.setTags(product.getTags());
+
+		return product2;
 	}
 
 	// Author sachin more
@@ -96,7 +95,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	// Get Product details by using Id
-	//Auther - Younus Shaikh
+	// Auther - Younus K Shaikh
 	@Override
 	public Product getProductById(Integer Id) {
 		logger.info("In ProductServiceImpl , getProduct Data");

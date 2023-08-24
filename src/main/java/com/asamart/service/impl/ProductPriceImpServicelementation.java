@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asamart.controller.ProductPriceController;
-import com.asamart.exceptions.CustomeExceptions;
 import com.asamart.model.ProductPrice;
 import com.asamart.repository.ProductPriceRepository;
 import com.asamart.service.ProductPriceService;
 
 @Service
 public class ProductPriceImpServicelementation implements ProductPriceService {
-	// @Younus Shaikh
+	// @Younus K Shaikh
 	private static final Logger logger = LoggerFactory.getLogger(ProductPriceController.class);
 
 	/* @Author: Sumit Gaikwad */
@@ -25,7 +24,7 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 		return productPriceRepository.save(priceDetails);
 	}
 
-	// @Auther - Younus Shaikh
+	// @Auther - Younus K Shaikh
 	// Update ProductPrice by using Price Id
 
 	@Override
@@ -34,17 +33,13 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 		int ppid = productPrice.getPriceId();
 		ppid = id;
 		ProductPrice productPrice2 = new ProductPrice();
-		try {
-			productPrice2 = productPriceRepository.findById(id).get();
-			productPrice2.setRegularPrice(productPrice.getRegularPrice());
-			productPrice2.setSellPrice(productPrice.getSellPrice());
-			productPrice2.setUnit(productPrice.getUnit());
-			productPrice2.setDeleted(false);
-			return productPriceRepository.save(productPrice2);
 
-		} catch (Exception e) {
-			throw new CustomeExceptions("ProductPrice id " + id + " is incorrect..");
-		}
+		productPrice2 = productPriceRepository.findById(id).get();
+		productPrice2.setRegularPrice(productPrice.getRegularPrice());
+		productPrice2.setSellPrice(productPrice.getSellPrice());
+		productPrice2.setUnit(productPrice.getUnit());
+		productPrice2.setDeleted(false);
+		return productPriceRepository.save(productPrice2);
 
 	}
 

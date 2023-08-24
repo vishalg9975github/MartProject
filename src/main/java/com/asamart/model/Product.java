@@ -31,8 +31,8 @@ public class Product {
 
 	private boolean isDeleted;
 
-	@OneToMany(mappedBy = "productid")
-	private List<ProductImage> getAllImages;
+	// @OneToMany(mappedBy = "productid")
+	// private List<ProductImage> getAllImages;
 
 	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
 	private List<ProductPrice> productPrice;
@@ -44,14 +44,12 @@ public class Product {
 	public void setProductPrice(List<ProductPrice> productPrice) {
 		this.productPrice = productPrice;
 	}
-
-	public List<ProductImage> getGetAllImages() {
-		return getAllImages;
-	}
-
-	public void setGetAllImages(List<ProductImage> getAllImages) {
-		this.getAllImages = getAllImages;
-	}
+	/*
+	 * public List<ProductImage> getGetAllImages() { return getAllImages; }
+	 * 
+	 * public void setGetAllImages(List<ProductImage> getAllImages) {
+	 * this.getAllImages = getAllImages; }
+	 */
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductImage> images = new ArrayList<>();
@@ -108,7 +106,6 @@ public class Product {
 		return featured;
 	}
 
-	
 	public void setFeatured(boolean featured) {
 		this.featured = featured;
 	}
@@ -116,19 +113,17 @@ public class Product {
 	public boolean isDeleted() {
 		return isDeleted;
 	}
-	
+
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", productname=" + productname + ", productdescription="
 				+ productdescription + ", brand=" + brand + ", tags=" + tags + ", productcode=" + productcode
-				+ ", featured=" + featured + ", isDeleted=" + isDeleted + ", getAllImages=" + getAllImages
-				+ ", productPrice=" + productPrice + ", images=" + images + "]";
+				+ ", featured=" + featured + ", isDeleted=" + isDeleted + ", productPrice=" + productPrice + ", images="
+				+ images + "]";
 	}
-
-	
 
 }

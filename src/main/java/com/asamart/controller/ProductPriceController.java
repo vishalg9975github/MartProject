@@ -31,7 +31,7 @@ public class ProductPriceController {
 
 	}
 	
-	//@auther - Younus Shaikh
+	//@auther - Younus K Shaikh
 	@PutMapping("/updateProductPriceById/{id}")
 	public ResponseEntity<ProductPrice> updateProductPriceById(@PathVariable("id") int id,
 			@RequestBody ProductPrice productPrice) {
