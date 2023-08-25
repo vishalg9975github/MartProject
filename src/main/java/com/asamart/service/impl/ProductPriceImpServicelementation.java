@@ -1,22 +1,13 @@
 package com.asamart.service.impl;
 
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import com.asamart.controller.ProductController;
 import com.asamart.controller.ProductPriceController;
-import com.asamart.exceptions.SubCategoryNotFoundException;
-
-import com.asamart.controller.ProductPriceController;
-
 import com.asamart.model.ProductPrice;
-import com.asamart.model.SubCategory;
 import com.asamart.repository.ProductPriceRepository;
-import com.asamart.repository.ProductRepository;
 import com.asamart.service.ProductPriceService;
 
 @Service
