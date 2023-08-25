@@ -2,6 +2,7 @@ package com.asamart.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.Product;
+import com.asamart.model.ProductImage;
 import com.asamart.model.SubCategory;
 import com.asamart.service.ProductService;
 
@@ -40,12 +42,14 @@ public class ProductController {
 
 		List<Product> productList = productService.getProductList();
 		List<Product> filteredList = new ArrayList<Product>();
+
 		for (Product product :productList) {
 			if(product.isDeleted() == false) {
+		
 				filteredList.add(product);
 			}
 		}
-		if(filteredList.isEmpty()==true) {
+		if (filteredList.isEmpty() == true) {
 			throw new EmptyResultDataAccessException(0);
 		}
 		logger.info("In product controller get ProductList method");
@@ -59,37 +63,25 @@ public class ProductController {
 	public ResponseEntity<String> saveProduct(@RequestBody Product product) {
 		logger.info("In the Controller class,saveProduct method");
 		try {
-		 productService.saveProduct(product);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
+			productService.saveProduct(product);
+			return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
 
 	// @Author- Anushka
 
 	@PutMapping("/updateProductById/{id}")
 	public ResponseEntity<String> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
 		logger.info("Update the Records");
-		
-			try {
-				 productService.updateProductById(id, product);
-				return ResponseEntity.status(HttpStatus.CREATED).body("Product Updated Successfully");
-				} catch (Exception e) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product Is Unavailable");
-				}
+
+		try {
+			productService.updateProductById(id, product);
+			return ResponseEntity.status(HttpStatus.CREATED).body("Product Updated Successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product Is Unavailable");
 		}
-
-	// @Author- Sachin More
-
-	@DeleteMapping("/deleteProduct/{id}")
-	public void deleteProductById(@PathVariable("id") Integer id) {
-		productService.deleteProduct(id);
-		logger.info("in productcontroller class deletemapping");
-
-		// System.out.println("product deleted successfully");
-
 	}
 
 	// @Auther - Younus Shaikh
@@ -103,25 +95,24 @@ public class ProductController {
 	}
 
 	// @Author - sachin more
-	@DeleteMapping("/softDeleteProduct/{id}")
+	@DeleteMapping("/DeleteProduct/{id}")
 	public ResponseEntity<String> softDeleteProduct(@PathVariable Integer id) {
-		productService.softDeleteProduct(id);
+		logger.info("In Rest Contoller , delete Product ");
+		Product product = productService.getProductById(id);
+		if (product.isDeleted()) {
+			throw new NoSuchElementException();
+		} else {
 
-		return ResponseEntity.ok("Product soft deleted successfully");
-	}
+			productService.softDeleteProduct(id);
+		}
 
-	// @Author - sachin more
-	@PostMapping("/recoverProduct/{id}")
-	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
-		productService.recoverDeletedProduct(id);
+		return ResponseEntity.ok("product delete successfully");
 
-
-		return ResponseEntity.ok("Product recovered successfully");
 	}
 
 	// to add the product with images
 	// @author shiwani dewang
-	
+
 	@PostMapping("/addProductImage")
 	public ResponseEntity<String> saveProductWithImages(@RequestParam String productname,
 			@RequestParam String productdescription, @RequestParam String brand, @RequestParam String tags,
@@ -134,7 +125,7 @@ public class ProductController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
- 
+
 	}
 
 }

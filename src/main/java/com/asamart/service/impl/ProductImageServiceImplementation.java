@@ -77,6 +77,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 
 	}
 
+
 	/* @ Auther Anushka */
 
 	@Override
@@ -89,12 +90,6 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	}
 
 
-	// Author sachin more
-	@Override
-	public void deleteProductImage(Integer imageId) {
-		productImageRepository.deleteById(imageId);
-
-	}
 
 	// Author sachin more
 	// soft delete in db
@@ -107,16 +102,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		}
 	}
 
-	// Author sachin more
-	// recover deleted productimage
-	@Transactional
-	public void recoverDeletedProduct(Integer productImageId) {
-		ProductImage productImage = productImageRepository.findById(productImageId).orElse(null);
-		if (productImage != null) {
-			productImage.setDeleted(false);
-			productImageRepository.save(productImage);
-		}
-	}
+	
 
 	// @Author Swapnil Gawai
 	@Override
