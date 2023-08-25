@@ -100,7 +100,7 @@ public class ProductServiceImplementation implements ProductService {
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
 		product2.setProductcode(product.getProductcode());
-		product2.setProductdescription(product2.getProductdescription());
+		product2.setProductdescription(product.getProductdescription());
 		product2.setProductname(product.getProductname());
 		product2.setTags(product.getTags());
 

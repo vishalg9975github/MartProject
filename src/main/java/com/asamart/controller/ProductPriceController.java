@@ -2,6 +2,7 @@ package com.asamart.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 
@@ -74,8 +75,15 @@ public class ProductPriceController {
 	@GetMapping("/getPriceDetails/{Id}")
 	public ResponseEntity<ProductPrice> getstudentbyId(@PathVariable("Id") Integer id)
 	{
+		
 		ProductPrice p1=productPriceService.getProductPrice(id);
+		
+		if(p1.isDeleted()==true){
+			throw new NoSuchElementException();
+		}
 		return ResponseEntity.ok().body(p1);
+
+		
 
 	}
 	
