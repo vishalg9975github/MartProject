@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.asamart.model.Category;
 import com.asamart.model.ProductImage;
 
 public interface ProductImageService {
@@ -32,4 +33,6 @@ public interface ProductImageService {
 	boolean imageExistsInDatabase(String imageHash);
 
 	void saveProductImage(ProductImage productImage);
+
+	
 }
