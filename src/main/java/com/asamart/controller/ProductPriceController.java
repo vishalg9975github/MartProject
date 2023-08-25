@@ -74,8 +74,16 @@ public class ProductPriceController {
 	@GetMapping("/getPriceDetails/{Id}")
 	public ResponseEntity<ProductPrice> getstudentbyId(@PathVariable("Id") Integer id)
 	{
+		
 		ProductPrice p1=productPriceService.getProductPrice(id);
+		
+		if(p1.isDeleted()==true)
+		{
+			return ResponseEntity.notFound().build();
+		}
+		
 		return ResponseEntity.ok().body(p1);
+		
 
 	}
 	
