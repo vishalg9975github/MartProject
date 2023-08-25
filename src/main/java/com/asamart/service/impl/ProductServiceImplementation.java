@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +56,18 @@ public class ProductServiceImplementation implements ProductService {
 
 	// @ Author -Nandini
 	@Override
-	public Product saveProduct(Product pd) {
-		logger.info("In the Controller class,saveProduct method");
+	public Product saveProduct(Product product) {
+logger.info("In the Controller class,saveProduct method");
 
-		if (productRepository.findByProductNmae(pd.getProductname()) != null) {
-			return productRepository.save(pd);
-
+		String productname= product.getProductname();
+		
+		if(productRepository.findByProductByName(productname) != null) 
+		{
+			throw new EntityNotFoundException("Product with the same name already exists: " + productname);
 		}
-
-		return productRepository.save(pd);
+		
+			return productRepository.save(product);
+		
 	}
 
 	// @ Author -Anushka
@@ -71,10 +76,11 @@ public class ProductServiceImplementation implements ProductService {
 	public Product updateProductById(int id, Product product) {
 		logger.info("Update the product details by Id");
 
-		int pid = product.getProductid();
-		pid = id;
+		Product product2 = productRepository.findProductByNameAndId( id);
 
-		Product product2 = productRepository.findById(pid).get();
+		//int pid = product.getProductid();
+		
+
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
 		product2.setProductcode(product.getProductcode());
@@ -82,7 +88,8 @@ public class ProductServiceImplementation implements ProductService {
 		product2.setProductname(product.getProductname());
 		product2.setTags(product.getTags());
 
-		return product2;
+		return productRepository.save(product2);
+
 	}
 
 	// Author sachin more

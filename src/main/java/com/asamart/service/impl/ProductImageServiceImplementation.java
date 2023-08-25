@@ -82,8 +82,11 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	public ProductImage getProductImageById(int imageId) {
 		logger.info("In ProductImage Service Implementation Class, getProductImageById method . ");
 
-		return productImageRepository.getProductImageAndNotDeleted(imageId);
+		ProductImage productImage= productImageRepository.getProductImageAndNotDeleted(imageId);
+		return productImage;
+		
 	}
+
 
 	// Author sachin more
 	@Override
