@@ -1,5 +1,7 @@
 package com.asamart.service;
 
+import java.util.List;
+
 import com.asamart.model.ProductPrice;
 
 public interface ProductPriceService {
@@ -10,5 +12,8 @@ public interface ProductPriceService {
 
 	// @Younus K Shaikh
 	public ProductPrice updateProductPriceById(int id, ProductPrice productPrice);
+	
+	public List<ProductPrice> getAllDetails();
+
 
 }

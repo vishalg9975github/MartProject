@@ -1,9 +1,13 @@
 package com.asamart.service.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.asamart.controller.ProductController;
 
 import com.asamart.controller.ProductPriceController;
 import com.asamart.model.ProductPrice;
@@ -15,8 +19,6 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 	// @Younus K Shaikh
 	private static final Logger logger = LoggerFactory.getLogger(ProductPriceController.class);
 
-	
-	
 	/* @Author: Sumit Gaikwad */
 	@Autowired
 	private ProductPriceRepository productPriceRepository;
@@ -25,17 +27,14 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 	public ProductPrice savePriceDetails(ProductPrice priceDetails) {
 		return productPriceRepository.save(priceDetails);
 	}
-	
-	
+
 	/* @Author: Suraj Wankhede */
 	@Override
 	public ProductPrice getProductPrice(Integer id) {
 		logger.info("in ProductPrice, getProduct Data");
-		ProductPrice product=productPriceRepository.findById(id).get();
+		ProductPrice product = productPriceRepository.findById(id).get();
 		return product;
 	}
-
-
 
 	// @Auther - Younus K Shaikh
 	// Update ProductPrice by using Price Id
@@ -53,6 +52,13 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 		productPrice2.setUnit(productPrice.getUnit());
 		productPrice2.setDeleted(false);
 		return productPriceRepository.save(productPrice2);
+
+	}
+
+	@Override
+	public List<ProductPrice> getAllDetails() {
+		// logger.info("Get all the productPrice details ");
+		return productPriceRepository.findAll();
 
 	}
 
