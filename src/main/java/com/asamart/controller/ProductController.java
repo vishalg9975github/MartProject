@@ -42,21 +42,30 @@ public class ProductController {
 
 	// Design the Restful web services to save the product data into database.
 	@PostMapping("/saveProduct")
-	public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
-		Product pro = productService.saveProduct(product);
+	public ResponseEntity<String> saveProduct(@RequestBody Product product) {
 		logger.info("In the Controller class,saveProduct method");
-		return ResponseEntity.ok().body(pro);
+		try {
+		 productService.saveProduct(product);
+		return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
+	
 
 	// @Author- Anushka
 
 	@PutMapping("/updateProductById/{id}")
-	public ResponseEntity<Product> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
+	public ResponseEntity<String> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
 		logger.info("Update the Records");
-		Product product2 = productService.updateProductById(id, product);
-		return ResponseEntity.ok().body(product2);
-
-	}
+		
+			try {
+				 productService.updateProductById(id, product);
+				return ResponseEntity.status(HttpStatus.CREATED).body("Product Updated Successfully");
+				} catch (Exception e) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product Is Unavailable");
+				}
+		}
 
 	// @Author- Sachin More
 

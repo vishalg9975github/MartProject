@@ -10,13 +10,14 @@ import com.asamart.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	
-	@Query(value="select * from product where productname=?1", nativeQuery = true)
+	@Query(value = "select * from product where productname=?1", nativeQuery = true)
 
-	public String findByProductNmae(String bname);
-	
+	public String findByProductByName(String productname);
+
 	Product findByproductname(String productname);
 
-	//public Object findByproductname1(String productname);
-}
+	@Query(value = "select * from product where is_deleted='0' and productid=?1", nativeQuery = true)
 
+	public Product findProductByNameAndId(int id);
+
+}
