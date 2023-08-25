@@ -1,10 +1,16 @@
 package com.asamart.service.impl;
 
-import java.util.List;
+
+import java.util.List ;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.asamart.controller.ProductController;
@@ -61,5 +67,26 @@ public class ProductPriceImpServicelementation implements ProductPriceService {
 		return productPriceRepository.findAll();
 
 	}
+
+	/* @Author:Nilesh D. L. */
+	@Override
+	public String softDeleteById(Integer id) {
+		Optional<ProductPrice> productPrice = productPriceRepository.findById(id);
+
+		if (productPrice.isPresent()) {
+			ProductPrice productPrices = productPrice.get();
+			 if (productPrices.isDeleted()) {
+	                throw new EmptyResultDataAccessException(1);
+	            }
+			productPrices.setDeleted(true);
+			productPriceRepository.save(productPrices);
+			return "Soft Delete Successful ";
+		}
+
+		return "Record Not Found";
+	}
+
+	
+
 
 }

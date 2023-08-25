@@ -6,6 +6,7 @@ import com.asamart.model.ProductPrice;
 
 public interface ProductPriceService {
 
+
 	public ProductPrice savePriceDetails(ProductPrice priceDetails);
 
 	public ProductPrice getProductPrice(Integer id);
@@ -15,5 +16,11 @@ public interface ProductPriceService {
 	
 	public List<ProductPrice> getAllDetails();
 
+
+
+
+//delete by id
+	String softDeleteById(Integer id);
+	
 
 }
