@@ -43,8 +43,9 @@ public class SubCategoryController {
 	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
 		logger.info("In the Controller class,getSubCategoryById method");
-		if(subCategory == null)
+		if(subCategory == null){
 			throw new NoSuchElementException();
+		}
 		return ResponseEntity.ok().body(subCategory);
 	}
 
