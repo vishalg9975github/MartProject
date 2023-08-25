@@ -47,7 +47,7 @@ public class ProductServiceImplementation implements ProductService {
 
 	/* @Author Ankita Ghayal */
 	@Override
-	public List<Product> getProduct() {
+	public List<Product> getProductList() {
 		List<Product> productList = new ArrayList<>();
 		productList = productRepository.findAll();
 		logger.info("In product controller get ProductList method");
@@ -57,7 +57,7 @@ public class ProductServiceImplementation implements ProductService {
 	// @ Author -Nandini
 	@Override
 	public Product saveProduct(Product product) {
-logger.info("In the Controller class,saveProduct method");
+		logger.info("In the Controller class,saveProduct method");
 
 		String productname= product.getProductname();
 		

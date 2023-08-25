@@ -58,7 +58,7 @@ public class ProductPriceController {
 		List<ProductPrice> allProductPriceDetails = productPriceService.getAllDetails();
 		List<ProductPrice> filteredList = new ArrayList<ProductPrice>();
 		for (ProductPrice productPrice :allProductPriceDetails) {
-			if(productPrice.isDeleted() == true) {
+			if(productPrice.isDeleted() == false) {
 				filteredList.add(productPrice);
 			}
 		}

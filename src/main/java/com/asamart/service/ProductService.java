@@ -13,7 +13,7 @@ public interface ProductService {
 	public Product saveProduct(Product pd);
 
 	// Update the product by Id
-	public List<Product> getProduct();
+	public List<Product> getProductList();
 
 	public Product updateProductById(int id, Product product);
 

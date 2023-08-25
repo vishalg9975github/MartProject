@@ -28,11 +28,11 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 		SubCategory subCategory = subCategoryRepository.findById(Id).orElse(null);
 		logger.info("In subcategory controller get SubCategory method");
 		if(subCategory!=null) {
-			if(subCategory.isDeleted() == true) {
+			if(subCategory.isDeleted() == false) {
 				return subCategory;
 			}
 		} 
-		return subCategoryRepository.save(subCategory);
+		return null;
 	}
 
 	/* @Author Ankita Ghayal */

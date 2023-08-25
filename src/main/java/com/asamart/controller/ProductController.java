@@ -38,10 +38,10 @@ public class ProductController {
 	@GetMapping("/getProductList")
 	public ResponseEntity<List<Product>> getProductList() {
 
-		List<Product> productList = productService.getProduct();
+		List<Product> productList = productService.getProductList();
 		List<Product> filteredList = new ArrayList<Product>();
 		for (Product product :productList) {
-			if(product.isDeleted() == true) {
+			if(product.isDeleted() == false) {
 				filteredList.add(product);
 			}
 		}

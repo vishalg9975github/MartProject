@@ -56,7 +56,7 @@ public class SubCategoryController {
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
 		List<SubCategory> filteredList = new ArrayList<SubCategory>();
 		for (SubCategory subCategory :subCategoryList) {
-			if(subCategory.isDeleted() == true) {
+			if(subCategory.isDeleted() == false) {
 				filteredList.add(subCategory);
 			}
 		}
