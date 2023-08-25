@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asamart.controller.SubCategoryController;
-import com.asamart.exceptions.SubCategoryNotFoundException;
 import com.asamart.model.SubCategory;
 import com.asamart.repository.SubCategoryRepository;
 import com.asamart.service.SubCategoryService;
@@ -26,11 +25,14 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 	/* @Author Ankita Ghayal */
 	@Override
 	public SubCategory getSubCategoryById(Integer Id) {
-		if(subCategoryRepository.findById(Id).isEmpty())
-			throw new SubCategoryNotFoundException("Requested SubCategoryId does not exist");
-		SubCategory subCategory = subCategoryRepository.findById(Id).get();
+		SubCategory subCategory = subCategoryRepository.findById(Id).orElse(null);
 		logger.info("In subcategory controller get SubCategory method");
-		return subCategory;
+		if(subCategory!=null) {
+			if(subCategory.isDeleted() == true) {
+				return subCategory;
+			}
+		} 
+		return null;
 	}
 
 	/* @Author Ankita Ghayal */

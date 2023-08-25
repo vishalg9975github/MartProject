@@ -1,10 +1,12 @@
 package com.asamart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.Product;
+import com.asamart.model.SubCategory;
 import com.asamart.service.ProductService;
 
 @RestController
@@ -30,33 +33,53 @@ public class ProductController {
 	private ProductService productService;
 
 	/* @Author Ankita Ghayal */
+
 	// Design the restful web service to get all productList details into database
-	@GetMapping("getProductList")
+	@GetMapping("/getProductList")
 	public ResponseEntity<List<Product>> getProductList() {
+
 		List<Product> productList = productService.getProduct();
+		List<Product> filteredList = new ArrayList<Product>();
+		for (Product product :productList) {
+			if(product.isDeleted() == true) {
+				filteredList.add(product);
+			}
+		}
+		if(filteredList.isEmpty()==true) {
+			throw new EmptyResultDataAccessException(0);
+		}
 		logger.info("In product controller get ProductList method");
-		return ResponseEntity.ok().body(productList);
+		return ResponseEntity.ok().body(filteredList);
 	}
 
 	/* Author name - Nandini Borase */
 
 	// Design the Restful web services to save the product data into database.
 	@PostMapping("/saveProduct")
-	public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
-		Product pro = productService.saveProduct(product);
+	public ResponseEntity<String> saveProduct(@RequestBody Product product) {
 		logger.info("In the Controller class,saveProduct method");
-		return ResponseEntity.ok().body(pro);
+		try {
+		 productService.saveProduct(product);
+		return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
+	
 
 	// @Author- Anushka
 
 	@PutMapping("/updateProductById/{id}")
-	public ResponseEntity<Product> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
+	public ResponseEntity<String> updateProductById(@PathVariable("id") int id, @RequestBody Product product) {
 		logger.info("Update the Records");
-		Product product2 = productService.updateProductById(id, product);
-		return ResponseEntity.ok().body(product2);
-
-	}
+		
+			try {
+				 productService.updateProductById(id, product);
+				return ResponseEntity.status(HttpStatus.CREATED).body("Product Updated Successfully");
+				} catch (Exception e) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product Is Unavailable");
+				}
+		}
 
 	// @Author- Sachin More
 
@@ -91,6 +114,7 @@ public class ProductController {
 	@PostMapping("/recoverProduct/{id}")
 	public ResponseEntity<String> recoverDeletedProduct(@PathVariable Integer id) {
 		productService.recoverDeletedProduct(id);
+
 
 		return ResponseEntity.ok("Product recovered successfully");
 	}

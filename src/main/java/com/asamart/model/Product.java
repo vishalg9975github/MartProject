@@ -31,9 +31,6 @@ public class Product {
 
 	private boolean isDeleted;
 
-	//@OneToMany(mappedBy = "productid")
-	//private List<ProductImage> getAllImages;
-
 	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
 	private List<ProductPrice> productPrice;
 
@@ -45,6 +42,7 @@ public class Product {
 		this.productPrice = productPrice;
 	}
 
+
 //	public List<ProductImage> getGetAllImages() {
 //		return getAllImages;
 //	}
@@ -52,6 +50,14 @@ public class Product {
 //	public void setGetAllImages(List<ProductImage> getAllImages) {
 //		this.getAllImages = getAllImages;
 //	}
+
+	/*
+	 * public List<ProductImage> getGetAllImages() { return getAllImages; }
+	 * 
+	 * public void setGetAllImages(List<ProductImage> getAllImages) {
+	 * this.getAllImages = getAllImages; }
+	 */
+
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductImage> images = new ArrayList<>();
@@ -108,7 +114,6 @@ public class Product {
 		return featured;
 	}
 
-	
 	public void setFeatured(boolean featured) {
 		this.featured = featured;
 	}
@@ -116,7 +121,7 @@ public class Product {
 	public boolean isDeleted() {
 		return isDeleted;
 	}
-	
+
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
@@ -129,10 +134,5 @@ public class Product {
 				+ images + "]";
 	}
 
-	
-	
-	
-
-	
 
 }

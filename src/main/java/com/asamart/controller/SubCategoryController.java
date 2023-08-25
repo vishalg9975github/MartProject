@@ -1,11 +1,19 @@
 package com.asamart.controller;
 
+import  com.asamart.exceptions.GlobalExceptionHandler;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,16 +43,27 @@ public class SubCategoryController {
 	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
 		logger.info("In the Controller class,getSubCategoryById method");
+		if(subCategory == null)
+			throw new NoSuchElementException();
 		return ResponseEntity.ok().body(subCategory);
 	}
 
 	/* @Author Ankita Ghayal */
 	// Design the restful web service to get all subcategory details from database
-	@GetMapping("getSubCategoryList")
+	@GetMapping("/getSubCategoryList")
 	public ResponseEntity<List<SubCategory>> getSubCategory() {
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
+		List<SubCategory> filteredList = new ArrayList<SubCategory>();
+		for (SubCategory subCategory :subCategoryList) {
+			if(subCategory.isDeleted() == true) {
+				filteredList.add(subCategory);
+			}
+		}
 		logger.info("In the Controller class,getSubCategoryList method");
-		return ResponseEntity.ok().body(subCategoryList);
+		if(filteredList.isEmpty()==true) {
+			throw new EmptyResultDataAccessException(0);
+		}
+		return ResponseEntity.ok().body(filteredList);
 	}
 
 	// @Author Swapnil Gawai

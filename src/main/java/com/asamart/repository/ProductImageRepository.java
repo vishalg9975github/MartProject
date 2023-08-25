@@ -9,7 +9,7 @@ import com.asamart.model.ProductImage;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage,Integer >{
 	
-	@Query(value="select * from productimage where default_image='0' and image_id=?1", nativeQuery = true)
+	@Query(value="select * from productimage where is_deleted=0 and image_id=?1", nativeQuery = true)
 	
 	public ProductImage getProductImageAndNotDeleted(int id);
 
