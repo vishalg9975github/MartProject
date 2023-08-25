@@ -32,7 +32,7 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 				return subCategory;
 			}
 		} 
-		return null;
+		return subCategoryRepository.save(subCategory);
 	}
 
 	/* @Author Ankita Ghayal */
