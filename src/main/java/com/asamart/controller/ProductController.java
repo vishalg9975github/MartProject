@@ -97,6 +97,7 @@ public class ProductController {
 
 	// to add the product with images
 	// @author shiwani dewang
+	
 	@PostMapping("/addProductImage")
 	public ResponseEntity<String> saveProductWithImages(@RequestParam String productname,
 			@RequestParam String productdescription, @RequestParam String brand, @RequestParam String tags,
@@ -109,7 +110,7 @@ public class ProductController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-
+ 
 	}
 
 }

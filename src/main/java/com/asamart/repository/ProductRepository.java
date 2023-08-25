@@ -11,12 +11,14 @@ import com.asamart.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	
+
+	
 	@Query(value="select * from product where productname=?1", nativeQuery = true)
 
 	public String findByProductNmae(String bname);
 	
 	Product findByproductname(String productname);
 
-	public Object findByproductname1(String productname);
+	//public Object findByproductname1(String productname);
 }
 
