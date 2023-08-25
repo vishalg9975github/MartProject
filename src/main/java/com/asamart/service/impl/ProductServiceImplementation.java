@@ -55,19 +55,31 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	// @ Author -Nandini
-	@Override
-	public Product saveProduct(Product product) {
-logger.info("In the Controller class,saveProduct method");
+	/*
+	 * @Override
+	 * 
+	 * public Product saveProduct(Product pd) {
+	 * logger.info("In the Controller class,saveProduct method");
+	 * 
+	 * if (productRepository.findByProductNmae(pd.getProductname()) != null) {
+	 * return productRepository.save(pd);
+	 * 
+	 * }
+	 * 
+	 * return productRepository.save(pd);
+	 */
 
-		String productname= product.getProductname();
-		
-		if(productRepository.findByProductByName(productname) != null) 
-		{
+	public Product saveProduct(Product product) {
+		logger.info("In the Controller class,saveProduct method");
+
+		String productname = product.getProductname();
+
+		if (productRepository.findByProductByName(productname) != null) {
 			throw new EntityNotFoundException("Product with the same name already exists: " + productname);
 		}
-		
-			return productRepository.save(product);
-		
+
+		return productRepository.save(product);
+
 	}
 
 	// @ Author -Anushka
@@ -76,10 +88,14 @@ logger.info("In the Controller class,saveProduct method");
 	public Product updateProductById(int id, Product product) {
 		logger.info("Update the product details by Id");
 
-		Product product2 = productRepository.findProductByNameAndId( id);
+		int pid = product.getProductid();
+		pid = id;
 
-		//int pid = product.getProductid();
-		
+		Product product2 = productRepository.findById(pid).get();
+
+		// Product product2 = productRepository.findProductByNameAndId( id);
+
+		// int pid = product.getProductid();
 
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
@@ -89,15 +105,6 @@ logger.info("In the Controller class,saveProduct method");
 		product2.setTags(product.getTags());
 
 		return productRepository.save(product2);
-
-	}
-
-	// Author sachin more
-	// permanently delete product
-	@Override
-	public void deleteProduct(Integer id) {
-		logger.info("in ProductService class delete method");
-		productRepository.deleteById(id);
 
 	}
 
@@ -119,19 +126,6 @@ logger.info("In the Controller class,saveProduct method");
 			product.setDeleted(true);
 			productRepository.save(product);
 		}
-	}
-
-	// Author sachin more
-	// recover deleted product
-	@Transactional
-	public void recoverDeletedProduct(Integer productId) {
-		Product product = productRepository.findById(productId).orElse(null);
-		if (product != null) {
-			product.setDeleted(false);
-			productRepository.save(product);
-
-		}
-
 	}
 
 	/* @author-shiwani dewang */

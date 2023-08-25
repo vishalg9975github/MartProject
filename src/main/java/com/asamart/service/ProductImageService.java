@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.asamart.model.Category;
 import com.asamart.model.ProductImage;
 
 public interface ProductImageService {
@@ -27,14 +28,11 @@ public interface ProductImageService {
 	ProductImage updateProductImage(int imageId, ProductImage updatedImage, MultipartFile newImageFile)
 			throws IOException;
 
-	public void deleteProductImage(Integer imageId);
-
 	public void softDeleteProduct(Integer id);
-
-	public void recoverDeletedProduct(Integer id);
 
 	boolean imageExistsInDatabase(String imageHash);
 
 	void saveProductImage(ProductImage productImage);
 
+	
 }

@@ -31,7 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	// @Author Sachin more this is for get
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException elementException) {
-		return new ResponseEntity<>("Record Not Found In Database !! Please Change Your Request", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("Record Not Found In Database !! ", HttpStatus.NOT_FOUND);
 	}
 
 	// @Author Sachin more - this is for in the postman wrong method is selection
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
-	// @Author Sachin more- delete method
+	// @Author Sachin more
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ResponseEntity<String> handleEmptyResultDataAccessException(
 			EmptyResultDataAccessException emptyResultDataAccessException) {
@@ -55,6 +55,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			InternalAuthenticationServiceException internalAuthenticationServiceException) {
 		return new ResponseEntity<>("User already exist in DB ", HttpStatus.NOT_ACCEPTABLE);
 	}
+	// @Author Sachin more
+		@ExceptionHandler(NullPointerException.class)
+		public ResponseEntity<String> handleNullPointerException(
+				NullPointerException nullPointerException) {
+			return new ResponseEntity<>("No data In Database", HttpStatus.NOT_FOUND);
+		}
 
 
 }
