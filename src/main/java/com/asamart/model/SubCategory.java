@@ -21,7 +21,6 @@ public class SubCategory {
 	private String subcategoryname;
 	private int categoryid;
 	private String description;
-
 	private boolean isDeleted;
 
 	public boolean isDeleted() {
@@ -89,4 +88,5 @@ public class SubCategory {
 		createddate = new Date();
 	}
 
+	
 }
