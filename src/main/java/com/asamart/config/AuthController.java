@@ -62,9 +62,19 @@ public class AuthController {
 		return "Credentials Invalid !!";
 	}
 
+	// @PostMapping("/create-user")
+	// public User createUser(@RequestBody User user) {
+	// return userService.createUser(user);
+	// }
+
 	@PostMapping("/create-user")
-	public User createUser(@RequestBody User user) {
-		return userService.createUser(user);
+	public ResponseEntity<String> createUser(@RequestBody User user) {
+		try {
+			User createdUser = userService.createUser(user);
+			return ResponseEntity.ok("You register successfully");
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 }

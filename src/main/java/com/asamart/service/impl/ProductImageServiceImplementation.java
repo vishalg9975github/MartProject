@@ -58,6 +58,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		logger.debug("In ProductImageservice implementation class,updateProductImage method");
 		// existingImage.setProductid(updatedImage.getProductid());
 		existingImage.setDefaultImage(updatedImage.isDefaultImage());
+		existingImage.setImageName(updatedImage.getImageName());
 		logger.info("In ProductImage service implementation class, updateproductImage method");
 		// Save new image file if provided
 		if (image != null && !image.isEmpty()) {
