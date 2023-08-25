@@ -1,5 +1,7 @@
 package com.asamart.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +19,8 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
-		return user;
+		//return user;
+		return new org.springframework.security.core.userdetails.User(
+			    user.getEmail(), user.getPassword(), new ArrayList<>());
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asamart.controller.SubCategoryController;
-import com.asamart.exceptions.SubCategoryNotFoundException;
 import com.asamart.model.SubCategory;
 import com.asamart.repository.SubCategoryRepository;
 import com.asamart.service.SubCategoryService;
@@ -26,11 +25,14 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 	/* @Author Ankita Ghayal */
 	@Override
 	public SubCategory getSubCategoryById(Integer Id) {
-		if(subCategoryRepository.findById(Id).isEmpty())
-			throw new SubCategoryNotFoundException("Requested SubCategoryId does not exist");
-		SubCategory subCategory = subCategoryRepository.findById(Id).get();
+		SubCategory subCategory = subCategoryRepository.findById(Id).orElse(null);
 		logger.info("In subcategory controller get SubCategory method");
-		return subCategory;
+		if(subCategory!=null) {
+			if(subCategory.isDeleted() == true) {
+				return subCategory;
+			}
+		} 
+		return subCategoryRepository.save(subCategory);
 	}
 
 	/* @Author Ankita Ghayal */
@@ -49,26 +51,23 @@ public class SubCategoryServiceImplementation implements SubCategoryService{
 		return subCategoryRepository.save(subCategory);
 	}
 
+	
+	//@Author Suraj Wankhede
 	@Override
-	public SubCategory updateSubCategory(Integer subcategoryid, SubCategory updatesubCategory) {
+	public SubCategory updateSubCategory(Integer id, SubCategory subCategory) {
 		logger.info("In subcategory controller update SubCategory method");
 
-		SubCategory sub1= subCategoryRepository.findById(subcategoryid).orElse(null);
-		if(sub1!=null)
-		{
-
-			sub1.setSubcategoryname(updatesubCategory.getSubcategoryname());
-			sub1.setCreatedBy(updatesubCategory.getCreatedBy());
-			sub1.setDescription(updatesubCategory.getDescription());
-			sub1.setCategoryid(updatesubCategory.getCategoryid());
-
-			return subCategoryRepository.save(sub1);
-		}
-		else
-		{
-			throw new RuntimeException("SubCategeory not found");
-		}
-
+		int pid = subCategory.getSubcategoryid();
+		pid = id;
+		
+		SubCategory sub=subCategoryRepository.findById(pid).get();
+		sub.setSubcategoryname(subCategory.getSubcategoryname());
+		sub.setCreatedBy(subCategory.getCreatedBy());
+		sub.setCategoryid(subCategory.getCategoryid());
+		sub.setDescription(subCategory.getDescription());
+		sub.setDeleted(subCategory.isDeleted());
+		
+		return subCategoryRepository.save(sub);
 	}
 	
     //@Author Swapnil Gawai

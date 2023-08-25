@@ -58,6 +58,7 @@ public class ProductImageServiceImplementation implements ProductImageService {
 		logger.debug("In ProductImageservice implementation class,updateProductImage method");
 		// existingImage.setProductid(updatedImage.getProductid());
 		existingImage.setDefaultImage(updatedImage.isDefaultImage());
+		existingImage.setImageName(updatedImage.getImageName());
 		logger.info("In ProductImage service implementation class, updateproductImage method");
 		// Save new image file if provided
 		if (image != null && !image.isEmpty()) {
@@ -83,10 +84,12 @@ public class ProductImageServiceImplementation implements ProductImageService {
 	public ProductImage getProductImageById(int imageId) {
 		logger.info("In ProductImage Service Implementation Class, getProductImageById method . ");
 
-		return productImageRepository.getProductImageAndNotDeleted(imageId);
+		ProductImage productImage= productImageRepository.getProductImageAndNotDeleted(imageId);
+		return productImage;
+		
 	}
 
-	
+
 
 	// Author sachin more
 	// soft delete in db

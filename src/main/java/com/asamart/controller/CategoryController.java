@@ -47,11 +47,21 @@ public class CategoryController {
 
 	/* @Author Shiwani Dewang */
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Category> updateCategory(@PathVariable Integer id,
+	public ResponseEntity<?> updateCategory(@PathVariable Integer id,
 			@RequestParam(value = "image", required = false) MultipartFile image, @ModelAttribute Category category)
 			throws IOException {
 		logger.info("In rest controller class , update category details by Id");
+		// Check if the category exists
+		Category existingCategory = categoryService.getCategoryById(id);
+		if (existingCategory == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category with ID " + id + " does not exist");
+		}
 
+		// Check if the category is deleted
+		if (existingCategory.isDeleted()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("Category with ID " + id + " is not available as it is deleted");
+		}
 		Category category1 = categoryService.updateCategory(id, category, image);
 		return ResponseEntity.ok(category1);
 

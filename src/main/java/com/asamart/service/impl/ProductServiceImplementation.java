@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,9 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	// @ Author -Nandini
+	/*
 	@Override
+
 	public Product saveProduct(Product pd) {
 		logger.info("In the Controller class,saveProduct method");
 
@@ -63,6 +67,20 @@ public class ProductServiceImplementation implements ProductService {
 		}
 
 		return productRepository.save(pd);
+*/
+	
+	public Product saveProduct(Product product) {
+logger.info("In the Controller class,saveProduct method");
+
+		String productname= product.getProductname();
+		
+		if(productRepository.findByProductByName(productname) != null) 
+		{
+			throw new EntityNotFoundException("Product with the same name already exists: " + productname);
+		}
+		
+			return productRepository.save(product);
+		
 	}
 
 	// @ Author -Anushka
@@ -75,6 +93,12 @@ public class ProductServiceImplementation implements ProductService {
 		pid = id;
 
 		Product product2 = productRepository.findById(pid).get();
+
+		//Product product2 = productRepository.findProductByNameAndId( id);
+
+		//int pid = product.getProductid();
+		
+
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
 		product2.setProductcode(product.getProductcode());
@@ -82,10 +106,14 @@ public class ProductServiceImplementation implements ProductService {
 		product2.setProductname(product.getProductname());
 		product2.setTags(product.getTags());
 
-		return product2;
+		return productRepository.save(product2);
+
 	}
 
+	
+
 	// Get Product details by using Id
+	// Auther - Younus K Shaikh
 	@Override
 	public Product getProductById(Integer Id) {
 		logger.info("In ProductServiceImpl , getProduct Data");

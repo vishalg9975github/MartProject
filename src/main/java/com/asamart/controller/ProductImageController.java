@@ -65,6 +65,10 @@ public class ProductImageController {
 		logger.info("In ProductImageController Class , getProductImageById");
 		
 		ProductImage productImage= productImageService.getProductImageById(imageId);
+		if(productImage ==null)
+		{
+			return ResponseEntity.notFound().build();
+		}
 		return ResponseEntity.ok(productImage);
 	}
 	
