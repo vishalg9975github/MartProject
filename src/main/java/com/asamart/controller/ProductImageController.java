@@ -7,7 +7,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.EmptyResultDataAccessException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -28,9 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.asamart.model.Category;
+
 import com.asamart.model.Product;
 import com.asamart.model.ProductImage;
 import com.asamart.service.ProductImageService;
+import com.asamart.service.ProductService;
 
 @RestController
 @RequestMapping("/Image")
@@ -38,6 +42,8 @@ public class ProductImageController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductImageController.class);
 	@Autowired
 	private ProductImageService productImageService;
+	@Autowired
+	private ProductService productService;
 
 	/* @Author -shiwani dewang */
 	@PostMapping("/addProductImage")
@@ -62,9 +68,11 @@ public class ProductImageController {
 
 	// @Author Swapnil Gawai
 	// @GetMapping("/images")
+
 	/* @Auther Anushka */
 
 	@GetMapping("/getProductImageById/{imageId}")
+
 	public ResponseEntity<ProductImage> getProductImageById(@PathVariable("imageId") int imageId) {
 		logger.info("In ProductImageController Class , getProductImageById");
 
@@ -75,8 +83,21 @@ public class ProductImageController {
 		return ResponseEntity.ok(productImage);
 	}
 
+	// @Author- Sachin More
+
+	/*
+	 * @DeleteMapping("/deleteProductImage/{imageId}") public void
+	 * deleteProductImageById(@PathVariable("imageId") Integer imageId) {
+	 * logger.info("in productImagecontroller class deletemapping");
+	 * productImageService.deleteProductImage(imageId); //
+	 * System.out.println("product deleted successfully");
+	 * 
+	 * }
+	 */
+
 	// @Author Swapnil Gawai
 	@GetMapping("/images")
+
 	public List<ProductImage> getAllImages() {
 
 		List<ProductImage> getAllImages = productImageService.getAllImages();
@@ -97,6 +118,22 @@ public class ProductImageController {
 			productImageService.softDeleteProduct(id);
 		}
 		return ResponseEntity.ok("product image delete successfully");
-
 	}
+
+	@PostMapping("/addImages/{productid}")
+	public ResponseEntity<String> addImagesToProduct(@PathVariable Integer productid,
+			@RequestParam("images") List<MultipartFile> images) {
+		try {
+			Product product = productService.findByproductid(productid);
+			if (product == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+			}
+
+			productImageService.addImagesToProduct(productid, images);
+			return ResponseEntity.status(HttpStatus.CREATED).body("Images added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+
 }

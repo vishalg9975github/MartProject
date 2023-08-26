@@ -26,4 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	public Product findProductByNameAndId(int id);
 
+//for images
+	Product findByproductid(Integer productid);
 }

@@ -56,8 +56,6 @@ public class ProductServiceImplementation implements ProductService {
 
 	// @ Author -Nandini
 
-	
-	
 	/*
 	 * @Override
 	 * 
@@ -98,9 +96,7 @@ public class ProductServiceImplementation implements ProductService {
 		Product product2 = productRepository.findById(pid).get();
 
 		// Product product2 = productRepository.findProductByNameAndId( id);
-
-		// int pid = product.getProductid();
-
+// int pid = product.getProductid();
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
 		product2.setProductcode(product.getProductcode());
@@ -206,5 +202,12 @@ public class ProductServiceImplementation implements ProductService {
 		} catch (IOException e) {
 			throw new RuntimeException("Error saving image.", e);
 		}
+	}
+
+//for images 
+	@Override
+	public Product findByproductid(Integer productid) {
+		return productRepository.findByproductid(productid);
+
 	}
 }
