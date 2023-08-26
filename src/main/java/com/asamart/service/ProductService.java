@@ -9,12 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.asamart.model.Product;
 
 public interface ProductService {
+	// to save the multiple product-images
+	void saveProductWithImages(String productname, String pdoductdescription, String brand, String tags,
+			String productcode, boolean featured, List<MultipartFile> images) throws IOException, Exception;
 
 	public Product saveProduct(Product pd);
 
-	// Update the product by Id
 	public List<Product> getProduct();
 
+	// Update the product by Id
 	public Product updateProductById(int id, Product product);
 
 	public void deleteProduct(Integer id);
@@ -28,8 +31,7 @@ public interface ProductService {
 	// recover deleted
 	public void recoverDeletedProduct(Integer id);
 
-//to save the multiple product-images
-	void saveProductWithImages(String productname, String pdoductdescription, String brand, String tags,
-			String productcode, boolean featured, List<MultipartFile> images) throws IOException, Exception;
+///for images
+	Product findByproductid(Integer productid);
 
 }

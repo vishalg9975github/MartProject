@@ -57,17 +57,16 @@ public class ProductServiceImplementation implements ProductService {
 	// @ Author -Nandini
 	@Override
 	public Product saveProduct(Product product) {
-logger.info("In the Controller class,saveProduct method");
+		logger.info("In the Controller class,saveProduct method");
 
-		String productname= product.getProductname();
-		
-		if(productRepository.findByProductByName(productname) != null) 
-		{
+		String productname = product.getProductname();
+
+		if (productRepository.findByProductByName(productname) != null) {
 			throw new EntityNotFoundException("Product with the same name already exists: " + productname);
 		}
-		
-			return productRepository.save(product);
-		
+
+		return productRepository.save(product);
+
 	}
 
 	// @ Author -Anushka
@@ -76,15 +75,14 @@ logger.info("In the Controller class,saveProduct method");
 	public Product updateProductById(int id, Product product) {
 		logger.info("Update the product details by Id");
 
-		Product product2 = productRepository.findProductByNameAndId( id);
+		Product product2 = productRepository.findProductByNameAndId(id);
 
-		//int pid = product.getProductid();
-		
+		// int pid = product.getProductid();
 
 		product2.setBrand(product.getBrand());
 		product2.setFeatured(false);
 		product2.setProductcode(product.getProductcode());
-		product2.setProductdescription(product2.getProductdescription());
+		product2.setProductdescription(product.getProductdescription());
 		product2.setProductname(product.getProductname());
 		product2.setTags(product.getTags());
 
@@ -208,5 +206,12 @@ logger.info("In the Controller class,saveProduct method");
 		} catch (IOException e) {
 			throw new RuntimeException("Error saving image.", e);
 		}
+	}
+
+//for images 
+	@Override
+	public Product findByproductid(Integer productid) {
+		return productRepository.findByproductid(productid);
+
 	}
 }

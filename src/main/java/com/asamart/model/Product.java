@@ -33,8 +33,8 @@ public class Product {
 	// @OneToMany(mappedBy = "productid")
 	// private List<ProductImage> getAllImages;
 
-	// @OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductPrice> productPrice;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductImage> images = new ArrayList<>();

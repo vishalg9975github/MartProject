@@ -20,7 +20,7 @@ public class ProductPrice {
 	private double sellPrice;
 	private String unit;
 	private boolean isDeleted;
-	@ManyToOne
+/*	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 
@@ -31,7 +31,7 @@ public class ProductPrice {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
+*/
 	public int getPriceId() {
 		return priceId;
 	}
