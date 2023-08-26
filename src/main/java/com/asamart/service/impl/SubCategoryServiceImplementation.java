@@ -77,7 +77,7 @@ public class SubCategoryServiceImplementation implements SubCategoryService {
 	public void softDeleteSubCategory(Integer subCategoryId) {
 		SubCategory subCategory = subCategoryRepository.findById(subCategoryId).orElse(null);
 		if (subCategory != null) {
-			subCategory.setDeleted(false);
+			subCategory.setDeleted(true);
 			subCategoryRepository.save(subCategory);
 		}
 	}
