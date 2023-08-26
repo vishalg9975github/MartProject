@@ -5,15 +5,11 @@ import com.asamart.exceptions.GlobalExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.dao.EmptyResultDataAccessException;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +39,12 @@ public class SubCategoryController {
 	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
 		logger.info("In the Controller class,getSubCategoryById method");
-		if (subCategory == null) 
+		if (subCategory == null)
 			throw new NoSuchElementException();
-		
+
+		if (subCategory == null) {
+			throw new NoSuchElementException();
+		}
 		return ResponseEntity.ok().body(subCategory);
 	}
 
@@ -55,8 +54,9 @@ public class SubCategoryController {
 	public ResponseEntity<List<SubCategory>> getSubCategory() {
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
 		List<SubCategory> filteredList = new ArrayList<SubCategory>();
+
 		for (SubCategory subCategory : subCategoryList) {
-			if (subCategory.isDeleted() == true) {
+			if (subCategory.isDeleted() == false) {
 				filteredList.add(subCategory);
 			}
 		}
