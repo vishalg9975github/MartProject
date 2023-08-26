@@ -1,6 +1,6 @@
 package com.asamart.controller;
 
-import  com.asamart.exceptions.GlobalExceptionHandler;
+import com.asamart.exceptions.GlobalExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,9 @@ public class SubCategoryController {
 	public ResponseEntity<SubCategory> getSubCategoryById(@PathVariable("id") Integer id) {
 		SubCategory subCategory = subCategoryService.getSubCategoryById(id);
 		logger.info("In the Controller class,getSubCategoryById method");
-		if(subCategory == null)
+		if (subCategory == null) 
 			throw new NoSuchElementException();
+		
 		return ResponseEntity.ok().body(subCategory);
 	}
 
@@ -54,13 +55,13 @@ public class SubCategoryController {
 	public ResponseEntity<List<SubCategory>> getSubCategory() {
 		List<SubCategory> subCategoryList = subCategoryService.getSubCategory();
 		List<SubCategory> filteredList = new ArrayList<SubCategory>();
-		for (SubCategory subCategory :subCategoryList) {
-			if(subCategory.isDeleted() == true) {
+		for (SubCategory subCategory : subCategoryList) {
+			if (subCategory.isDeleted() == true) {
 				filteredList.add(subCategory);
 			}
 		}
 		logger.info("In the Controller class,getSubCategoryList method");
-		if(filteredList.isEmpty()==true) {
+		if (filteredList.isEmpty() == true) {
 			throw new EmptyResultDataAccessException(0);
 		}
 		return ResponseEntity.ok().body(filteredList);
@@ -91,8 +92,5 @@ public class SubCategoryController {
 
 		return ResponseEntity.ok("SubCategory  deleted successfully");
 	}
-	
-	
-	
-	
+
 }
